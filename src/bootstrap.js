@@ -27,10 +27,17 @@ const BootstrapModalService = ModalService.extend({
   start () {
     const layout = this.layout = new this.LayoutView()
     this.container.show(layout)
+
+    layout.$el.modal({
+      show: false,
+      backdrop: 'static'
+    })
+
     layout.$el.on({
       'shown.bs.modal': (e) => this.trigger('modal:show', e),
       'hidden.bs.modal': (e) => this.trigger('modal:hide', e)
     })
+
     this.contentRegion = new Region({
       el: layout.$('.modal-content')
     })

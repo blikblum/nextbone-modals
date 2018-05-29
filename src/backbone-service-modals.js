@@ -1,5 +1,4 @@
 import Service from 'radio.service'
-import Backbone from 'backbone'
 import _ from 'underscore'
 
 /**
@@ -27,13 +26,6 @@ export default Service.extend({
   constructor () {
     this.views = []
 
-    this.listenTo(Backbone.history, 'route', () => {
-      if (this.fragment !== Backbone.history.fragment) {
-        this.fragment = null
-        this.close()
-      }
-    })
-
     Service.prototype.constructor.apply(this, arguments)
   },
 
@@ -46,7 +38,6 @@ export default Service.extend({
     let previousView
     return Promise.resolve().then(() => {
       this.trigger('before:open', view, options)
-      this.fragment = Backbone.history.fragment
       this._isOpen = true
 
       previousView = _.last(this.views)

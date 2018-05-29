@@ -1,4 +1,6 @@
-import Service from '../../src/backbone-service-modals'
+/* eslint-env jest */
+
+import {ModalService as Service} from '../../src/index'
 import {View, history} from 'backbone'
 
 describe('ModalService', function () {

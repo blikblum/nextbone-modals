@@ -4,7 +4,7 @@ import _ from 'underscore'
 /**
  * @class ModalService
  */
-export default Service.extend({
+const ModalService = Service.extend({
 
   /**
    * @abstract
@@ -214,3 +214,5 @@ export default Service.extend({
    */
   animateOut () {}
 })
+
+export default ModalService

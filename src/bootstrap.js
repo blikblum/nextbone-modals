@@ -110,7 +110,7 @@ const viewClassesNames = ['LayoutView', 'AlertView', 'PromptView', 'ConfirmView'
 const BootstrapModalService = ModalService.extend({
   _prepareViewClasses () {
     viewClassesNames.forEach(className => {
-      let ViewClass = this[className] || createDefaultView(className)
+      let ViewClass = this[className] || (this[className] = createDefaultView(className))
       if (typeof ViewClass !== 'function') {
         throw new Error(`ModalService: expected ${className} to be a template function or View class`)
       }

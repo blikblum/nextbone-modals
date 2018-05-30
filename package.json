@@ -1,6 +1,6 @@
 {
   "name": "marionette.modalservice",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "description": "Modal service for Marionette",
   "main": "dist/marionette.modalservice.js",
   "module": "dist/marionette.modalservice.esm.js",

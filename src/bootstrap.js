@@ -152,7 +152,7 @@ const BootstrapModalService = ModalService.extend({
   },
 
   remove () {
-    this.contentRegion.reset()
+    this.contentRegion.empty()
   },
 
   animateIn () {

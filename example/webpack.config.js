@@ -4,6 +4,8 @@ var MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 var {GenerateSW} = require('workbox-webpack-plugin')
 var CleanPlugin = require('clean-webpack-plugin')
 
+
+
 var DIST_DIR = 'dist'
 var devDevTool = 'source-map' // see https://webpack.js.org/configuration/devtool/ for options
 var prodDevTool = false
@@ -23,8 +25,8 @@ var plugins = [
   new MiniCSSExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
-    filename: '[name].css',
-    chunkFilename: '[id].css'
+    filename: "[name].css",
+    chunkFilename: "[id].css"
   }),
 
   new HtmlWebpackPlugin({
@@ -57,10 +59,10 @@ module.exports = function (env) {
           loader: 'babel-loader',
           options: {
             presets: [['env', envPresetConfig]],
-            plugins: ['transform-class-properties', 'transform-object-rest-spread', 'syntax-dynamic-import']
+            plugins: ['transform-class-properties','transform-object-rest-spread','syntax-dynamic-import']
           }
         }]
-      }, {
+    }, {
       test: /\.css$/,
       use: [
         MiniCSSExtractPlugin.loader,
@@ -69,26 +71,26 @@ module.exports = function (env) {
     }, {
       test: /\.(sass|scss)$/,
       use: [MiniCSSExtractPlugin.loader, 'css-loader', 'sass-loader']
+     },{
+      test: /\.(woff|woff2)$/,
+      use: "url-loader?limit=10000&mimetype=application/font-woff"
     }, {
-       test: /\.(woff|woff2)$/,
-       use: 'url-loader?limit=10000&mimetype=application/font-woff'
-     }, {
       test: /\.ttf$/,
-      use: 'url-loader?limit=10000&mimetype=application/octet-stream'
+      use: "url-loader?limit=10000&mimetype=application/octet-stream"
     }, {
       test: /\.eot$/,
-      use: 'file-loader'
+      use: "file-loader"
     }, {
       test: /\.svg$/,
-      use: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      use: "url-loader?limit=10000&mimetype=image/svg+xml"
     }, {
-      test: /bootstrap.+\.js$/,
-      use: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+      test: /^bootstrap\.js$/,
+      use: "imports-loader?jQuery=jquery,$=jquery,Popper=popper.js,this=>window"
     }]
     },
     resolve: {
       modules: [path.resolve(__dirname, './src/common'), 'node_modules']
-    },
+    },    
     plugins: plugins,
     devtool: isProd ? prodDevTool : devDevTool
   }

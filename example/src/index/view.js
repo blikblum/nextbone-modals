@@ -5,7 +5,7 @@ export default View.extend({
   template: `
     <div class="container">
       <h2>Modal Service Example</h2>
-      <div class="row">
+      <div class="row" mt-2>
         <div class="col-md-3">
           <button id="alert" class="btn btn-primary">Alert</button>
         </div>
@@ -16,8 +16,10 @@ export default View.extend({
           <button id="prompt" class="btn btn-primary">Prompt</button>
         </div>
       </div>
+      <div class="row mt-4">
+        <h5>Log</h5>        
+      </div>
       <div class="row">
-        <h5>Log</h5>
         <div id="log"></div>
       </div>
     </div>
@@ -33,7 +35,7 @@ export default View.extend({
     modals.request('alert', {
       title: 'Alert',
       text: `You are in danger!`
-    }).then(val => this.log('alert', 'NA'))
+    }).then(val => this.log('alert', val))
   },
 
   showConfirm (e) {
@@ -46,7 +48,8 @@ export default View.extend({
   showPrompt (e) {
     modals.request('prompt', {
       title: 'Prompt',
-      text: `What is your name?`
+      text: `What is your name?`,
+      value: 'Waldo'
     }).then(val => this.log('prompt', val))
   },
 

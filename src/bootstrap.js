@@ -26,13 +26,16 @@ const BootstrapModalService = ModalService.extend({
   },
 
   setup (options = {}) {
-    mergeOptions(this, options, viewClassesNames.concat(['container']))
+    mergeOptions(this, options, viewClassesNames.concat(['el']))
     this._prepareViewClasses()
   },
 
   start () {
     const layout = this.layout = new this.LayoutView()
-    this.container.show(layout)
+    this.modalRegion = new Region({
+      el: this.el
+    })
+    this.modalRegion.show(layout)
 
     layout.$el.modal({
       show: false,

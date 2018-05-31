@@ -1,6 +1,6 @@
 {
+  "name": "modal-example",
   "version": "0.1.0",
-  "main": "main.js",
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --mode=development",

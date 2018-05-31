@@ -1,6 +1,6 @@
 import './setup'
-import {Application, Region} from 'backbone.marionette'
-import {modals} from 'modals'
+import {Application} from 'backbone.marionette'
+import {modals} from 'services'
 import $ from 'jquery'
 import IndexView from './index/view'
 
@@ -10,12 +10,8 @@ let App = Application.extend({
 
 let app = new App()
 
-let modalRegion = new Region({
-  el: $('#main-modal-container')
-})
-
 modals.setup({
-  container: modalRegion
+  el: '#main-modal-container'
 })
 
 app.getRegion().show(new IndexView())

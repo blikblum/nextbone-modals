@@ -15,7 +15,7 @@ const ModalView = View.extend({
 
   triggers: {
     'click .btn-primary': {event: 'confirm', preventDefault: false, stopPropagation: false},
-    'click .btn-default': 'cancel',
+    'click .btn-secondary': 'cancel',
     'click .close': 'cancel'
   },
 
@@ -54,8 +54,8 @@ const AlertView = ModalView.extend({
   template: function renderAlert (data) {
     return `
     <div class="modal-header">
-      <button type="button" class="close" aria-hidden="true">&times;</button>
-      <h4 class="modal-title">${data.title}</h4>
+      <h5 class="modal-title">${data.title}</h5>
+      <button type="button" class="close" aria-hidden="true">&times;</button>      
     </div>
 
     <div class="modal-body">
@@ -75,8 +75,8 @@ const PromptView = ModalView.extend({
   template: function renderPrompt (data) {
     return `
     <div class="modal-header">
-      <button type="button" class="close" aria-hidden="true">&times;</button>
-      <h4 class="modal-title">${data.title}</h4>
+      <h5 class="modal-title">${data.title}</h5>
+      <button type="button" class="close" aria-hidden="true">&times;</button>      
     </div>
 
     <div class="modal-body">
@@ -87,7 +87,7 @@ const PromptView = ModalView.extend({
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-default">${defaultCaptions.cancel}</button>
+      <button type="button" class="btn btn-secondary">${defaultCaptions.cancel}</button>
       <button type="submit" class="btn btn-primary">${defaultCaptions.ok}</button>
     </div>
     `
@@ -98,8 +98,8 @@ const ConfirmView = ModalView.extend({
   template: function renderConfirm (data) {
     return `
     <div class="modal-header">
-      <button type="button" class="close" aria-hidden="true">&times;</button>
-      <h4 class="modal-title">${data.title}</h4>
+      <h5 class="modal-title">${data.title}</h5>
+      <button type="button" class="close" aria-hidden="true">&times;</button>      
     </div>
     
     <div class="modal-body">
@@ -107,7 +107,7 @@ const ConfirmView = ModalView.extend({
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-default">${defaultCaptions.no}</button>
+      <button type="button" class="btn btn-secondary">${defaultCaptions.no}</button>
       <button type="button" class="btn btn-primary">${defaultCaptions.yes}</button>
     </div>      
     `

@@ -26,16 +26,21 @@ const BootstrapModalService = ModalService.extend({
   },
 
   setup (options = {}) {
-    mergeOptions(this, options, viewClassesNames.concat(['el']))
+    mergeOptions(this, options, viewClassesNames.concat(['el', 'container']))
     this._prepareViewClasses()
   },
 
   start () {
     const layout = this.layout = new this.LayoutView()
-    this.modalRegion = new Region({
-      el: this.el
-    })
-    this.modalRegion.show(layout)
+
+    if (!this.container) {
+      if (!this.el) throw new Error('ModalService: container or el options must be defined')
+
+      this.container = new Region({
+        el: this.el
+      })
+    }
+    this.container.show(layout)
 
     layout.$el.modal({
       show: false,

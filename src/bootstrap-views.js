@@ -14,7 +14,7 @@ const ModalView = View.extend({
   },
 
   triggers: {
-    'click .btn-primary': 'confirm',
+    'click .btn-primary': {event: 'confirm', preventDefault: false, stopPropagation: false},
     'click .btn-default': 'cancel',
     'click .close': 'cancel'
   },

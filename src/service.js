@@ -120,7 +120,7 @@ const ModalService = Service.extend({
         promise
           .then(() => this.close(view, options))
           .then(() => this.trigger('alert', null, view, options))
-          .then(resolve, reject)
+          .then(() => resolve(), reject)
       })
     })
   },

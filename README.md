@@ -1,17 +1,13 @@
-# Backbone Modal Service
+# Marionette Modal Service
 
-Simple modal service for Backbone.
-
-[![Travis build status](http://img.shields.io/travis/thejameskyle/backbone-service-modals.svg?style=flat)](https://travis-ci.org/thejameskyle/backbone-service-modals)
-[![Code Climate](https://codeclimate.com/github/thejameskyle/backbone-service-modals/badges/gpa.svg)](https://codeclimate.com/github/thejameskyle/backbone-service-modals)
-[![Test Coverage](https://codeclimate.com/github/thejameskyle/backbone-service-modals/badges/coverage.svg)](https://codeclimate.com/github/thejameskyle/backbone-service-modals)
-[![Dependency Status](https://david-dm.org/thejameskyle/backbone-service-modals.svg)](https://david-dm.org/thejameskyle/backbone-service-modals)
-[![devDependency Status](https://david-dm.org/thejameskyle/backbone-service-modals/dev-status.svg)](https://david-dm.org/thejameskyle/backbone-service-modals#info=devDependencies)
+Simple modal service for MarionetteJS.
 
 ## Usage
 
+### ModalService
+
 ```js
-import ModalService from 'backbone-service-modals';
+import {ModalService} from 'marionette.modalservice';
 import AlertView from './views/alert';
 import ConfirmView from './views/confirm';
 import PromptView from './views/prompt';
@@ -97,19 +93,31 @@ modalService.request('close').then(() => {
 });
 ```
 
+### BootstrapModalService
+
+A preconfigured service to work with Bootstrap modals
+
+```js
+import {BootstrapModalService} from 'marionette.modalservice';
+
+const modalService = new BootstrapModalService();
+
+modalService.setup({
+  el: '#modal-container'
+})
+
+// same usage as vanilla
+
+// see a full example ar ./example
+```
+
+
 ## Contibuting
 
 ### Getting Started
 
 [Fork](https://help.github.com/articles/fork-a-repo/) and
 [clone](http://git-scm.com/docs/git-clone) this repo.
-
-```
-git clone git@github.com:thejameskyle/backbone-service-modals.git && cd backbone-service-modals
-```
-
-Make sure [Node.js](http://nodejs.org/) and [npm](https://www.npmjs.org/) are
-[installed](http://nodejs.org/download/).
 
 ```
 npm install
@@ -124,3 +132,4 @@ npm test
 ===
 
 © 2015 James Kyle. Distributed under ISC license.
+© 2018 Luiz Américo

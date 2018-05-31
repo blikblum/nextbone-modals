@@ -4,8 +4,8 @@ import {View} from 'backbone.marionette'
 const defaultCaptions = {
   ok: 'OK',
   cancel: 'Cancel',
-  no: 'No',
-  yes: 'Yes'
+  yes: 'Yes',
+  no: 'No'
 }
 
 const ModalView = View.extend({
@@ -63,7 +63,7 @@ const AlertView = ModalView.extend({
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary">${defaultCaptions.ok}</button>
+      <button type="button" class="btn btn-primary">${data.ok || defaultCaptions.ok}</button>
     </div>
     `
   }
@@ -82,13 +82,13 @@ const PromptView = ModalView.extend({
     <div class="modal-body">
       <div class="form-group">
         <label for="modal__input--prompt">${data.text}</label>
-        <input id="modal__input--prompt" class="form-control" type="text">
+        <input id="modal__input--prompt" class="form-control" type="text" value="${data.value || ''}">
       </div>
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary">${defaultCaptions.cancel}</button>
-      <button type="submit" class="btn btn-primary">${defaultCaptions.ok}</button>
+      <button type="button" class="btn btn-secondary">${data.cancel || defaultCaptions.cancel}</button>
+      <button type="submit" class="btn btn-primary">${data.ok || defaultCaptions.ok}</button>
     </div>
     `
   }
@@ -107,8 +107,8 @@ const ConfirmView = ModalView.extend({
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary">${defaultCaptions.no}</button>
-      <button type="button" class="btn btn-primary">${defaultCaptions.yes}</button>
+      <button type="button" class="btn btn-secondary">${data.no || defaultCaptions.no}</button>
+      <button type="button" class="btn btn-primary">${data.yes || defaultCaptions.yes}</button>
     </div>      
     `
   }

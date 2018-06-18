@@ -1,6 +1,10 @@
 import {View} from 'backbone.marionette'
 import {modals} from 'services'
 
+function htmlRenderer (template) {
+  return template
+}
+
 export default View.extend({
   template: `
     <div class="container">
@@ -56,4 +60,4 @@ export default View.extend({
   log (type, msg) {
     this.$('#log').append(`${type}: ${msg} <br/>`)
   }
-})
+}).setRenderer(htmlRenderer)

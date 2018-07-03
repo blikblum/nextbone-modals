@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('radio.service'), require('underscore'), require('backbone'), require('backbone.marionette')) :
   typeof define === 'function' && define.amd ? define(['exports', 'radio.service', 'underscore', 'backbone', 'backbone.marionette'], factory) :
-  (factory((global.marionette = global.marionette || {}, global.marionette.modalservice = {}),global.Service,global._,global.backbone,global.backbone_marionette));
+  (factory((global.Marionette = global.Marionette || {}, global.Marionette.ModalService = {}),global.RadioService,global._,global.Backbone,global.Marionette));
 }(this, (function (exports,Service,_,backbone,backbone_marionette) { 'use strict';
 
   Service = Service && Service.hasOwnProperty('default') ? Service['default'] : Service;
@@ -22,7 +22,8 @@
         close: 'close',
         alert: 'alert',
         confirm: 'confirm',
-        prompt: 'prompt'
+        prompt: 'prompt',
+        dialog: 'dialog'
       };
     },
 
@@ -213,6 +214,37 @@
         view.on({
           submit: function submit(text) {
             return close(text);
+          },
+          cancel: function cancel() {
+            return close();
+          }
+        });
+      });
+    },
+    dialog: function dialog(view, options) {
+      var _this6 = this;
+
+      if (!view) {
+        throw new Error('ModalService: no view option passed to dialog');
+      }
+      return new Promise(function (resolve, reject) {
+        var promise = _this6.open(view, options);
+
+        _this6.trigger('before:dialog', view, options);
+
+        var close = function close(result) {
+          promise.then(function () {
+            return _this6.close(view, options);
+          }).then(function () {
+            return _this6.trigger('dialog', result, view, options);
+          }).then(function () {
+            return resolve(result);
+          }, reject);
+        };
+
+        view.on({
+          submit: function submit(data) {
+            return close(data);
           },
           cancel: function cancel() {
             return close();

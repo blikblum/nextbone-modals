@@ -18,7 +18,8 @@ var ModalService = Service.extend({
       close: 'close',
       alert: 'alert',
       confirm: 'confirm',
-      prompt: 'prompt'
+      prompt: 'prompt',
+      dialog: 'dialog'
     };
   },
 
@@ -209,6 +210,37 @@ var ModalService = Service.extend({
       view.on({
         submit: function submit(text) {
           return close(text);
+        },
+        cancel: function cancel() {
+          return close();
+        }
+      });
+    });
+  },
+  dialog: function dialog(view, options) {
+    var _this6 = this;
+
+    if (!view) {
+      throw new Error('ModalService: no view option passed to dialog');
+    }
+    return new Promise(function (resolve, reject) {
+      var promise = _this6.open(view, options);
+
+      _this6.trigger('before:dialog', view, options);
+
+      var close = function close(result) {
+        promise.then(function () {
+          return _this6.close(view, options);
+        }).then(function () {
+          return _this6.trigger('dialog', result, view, options);
+        }).then(function () {
+          return resolve(result);
+        }, reject);
+      };
+
+      view.on({
+        submit: function submit(data) {
+          return close(data);
         },
         cancel: function cancel() {
           return close();

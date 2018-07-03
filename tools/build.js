@@ -25,7 +25,13 @@ promise = promise.then(() => del(['dist/*']));
     file: `dist/${format === 'umd' ? 'marionette.modalservice' : 'marionette.modalservice.esm'}.js`,
     format,
     sourcemap: true,
-    name: format === 'umd' ? pkg.name : undefined
+    name: format === 'umd' ? 'Marionette.ModalService' : undefined,
+    globals: {
+      backbone: 'Backbone',
+      'backbone.marionette': 'Marionette',
+      'radio.service': 'RadioService',
+      'underscore': '_'
+    }
   })))
 })
 

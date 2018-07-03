@@ -428,6 +428,68 @@ describe('ModalService', function () {
     })
   })
 
+  describe('#dialog', function () {
+    var openSpy
+    var closeSpy
+    var triggerSpy
+    var dialogView, modalService, options
+
+    var DialogView = View.extend({})
+
+    beforeEach(function () {
+      dialogView = new DialogView()
+      modalService = new Service()
+      openSpy = jest.spyOn(modalService, 'open')
+      closeSpy = jest.spyOn(modalService, 'close')
+      triggerSpy = jest.spyOn(modalService, 'trigger')
+      options = {}
+    })
+
+    it('should throws when a view instance is not passed as option', function () {
+      return expect(() => { modalService.dialog() }).toThrow('ModalService: no view option passed to dialog')
+    })
+
+    it('should open the dialog modal and resolve with arbitrary data on submit', function () {
+      const data = {key: 'value'}
+      modalService.on('open', () => dialogView.trigger('submit', data))
+
+      return modalService.dialog(dialogView).then(result => {
+        expect(result).toBe(data)
+        expect(openSpy).toHaveBeenCalledWith(dialogView, undefined)
+        expect(closeSpy).toHaveBeenCalledWith(dialogView, undefined)
+      })
+    })
+
+    it('should open the dialog modal and close with undefined on cancel', function () {
+      modalService.on('open', () => dialogView.trigger('cancel', 'devilsAdvocateString'))
+
+      return modalService.dialog(dialogView).then(result => {
+        expect(result).toBeUndefined()
+        expect(openSpy).toHaveBeenCalledWith(dialogView, undefined)
+        expect(closeSpy).toHaveBeenCalledWith(dialogView, undefined)
+      })
+    })
+
+    it('should trigger a "before:dialog" event', function () {
+      modalService.on('open', () => {
+        expect(triggerSpy)
+          .toHaveBeenCalledWith('before:dialog', dialogView, options)
+        dialogView.trigger('submit', 'myString')
+      })
+
+      return modalService.dialog(dialogView, options)
+    })
+
+    it('should trigger a "dialog" event', function () {
+      modalService.on('open', () => dialogView.trigger('submit', 'myString'))
+
+      return modalService.dialog(dialogView, options).then(() => {
+        expect(triggerSpy)
+          .toHaveBeenCalledWith('dialog', 'myString', dialogView, options)
+      })
+    })
+  })
+
   describe('#isOpen', function () {
     var modalService
     beforeEach(function () {
@@ -463,7 +525,7 @@ describe('ModalService', function () {
       var openSpy = jest.spyOn(modalService, 'open')
       openSpy.mockImplementation(() => {})
       return modalService.request('open').then(() => {
-        expect(openSpy).toHaveBeenCalled
+        expect(openSpy).toHaveBeenCalled()
       })
     })
 
@@ -471,7 +533,7 @@ describe('ModalService', function () {
       var closeSpy = jest.spyOn(modalService, 'close')
       closeSpy.mockImplementation(() => {})
       return modalService.request('close').then(() => {
-        expect(closeSpy).toHaveBeenCalled
+        expect(closeSpy).toHaveBeenCalled()
       })
     })
 
@@ -479,7 +541,7 @@ describe('ModalService', function () {
       var alertSpy = jest.spyOn(modalService, 'alert')
       alertSpy.mockImplementation(() => {})
       return modalService.request('alert').then(() => {
-        expect(alertSpy).toHaveBeenCalled
+        expect(alertSpy).toHaveBeenCalled()
       })
     })
 
@@ -487,7 +549,7 @@ describe('ModalService', function () {
       var confirmSpy = jest.spyOn(modalService, 'confirm')
       confirmSpy.mockImplementation(() => {})
       return modalService.request('confirm').then(() => {
-        expect(confirmSpy).toHaveBeenCalled
+        expect(confirmSpy).toHaveBeenCalled()
       })
     })
 
@@ -495,7 +557,15 @@ describe('ModalService', function () {
       var promptSpy = jest.spyOn(modalService, 'prompt')
       promptSpy.mockImplementation(() => {})
       return modalService.request('prompt').then(() => {
-        expect(promptSpy).toHaveBeenCalled
+        expect(promptSpy).toHaveBeenCalled()
+      })
+    })
+
+    it('should have a request for dialog', function () {
+      var dialogSpy = jest.spyOn(modalService, 'dialog')
+      dialogSpy.mockImplementation(() => {})
+      return modalService.request('dialog').then(() => {
+        expect(dialogSpy).toHaveBeenCalled()
       })
     })
   })

@@ -16,7 +16,8 @@ const ModalService = Service.extend({
       close: 'close',
       alert: 'alert',
       confirm: 'confirm',
-      prompt: 'prompt'
+      prompt: 'prompt',
+      dialog: 'dialog'
     }
   },
 
@@ -171,6 +172,29 @@ const ModalService = Service.extend({
 
       view.on({
         submit: text => close(text),
+        cancel: () => close()
+      })
+    })
+  },
+
+  dialog (view, options) {
+    if (!view) {
+      throw new Error('ModalService: no view option passed to dialog')
+    }
+    return new Promise((resolve, reject) => {
+      let promise = this.open(view, options)
+
+      this.trigger('before:dialog', view, options)
+
+      let close = result => {
+        promise
+          .then(() => this.close(view, options))
+          .then(() => this.trigger('dialog', result, view, options))
+          .then(() => resolve(result), reject)
+      }
+
+      view.on({
+        submit: data => close(data),
         cancel: () => close()
       })
     })

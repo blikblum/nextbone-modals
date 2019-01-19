@@ -29,7 +29,7 @@ export class BootstrapModals extends Modals {
   createElement (type) {
     const name = `bootstrap-modal-${type}`
     if (!customElements.get(name)) {
-      customElements.define(name, elementClasses[name])
+      customElements.define(name, elementClasses[type])
     }
     return document.createElement(name)
   }

@@ -34,7 +34,7 @@ class BaseModal extends HTMLElement {
     this.bindEvent('.btn-primary', 'click', this.confirmClick)
     this.bindEvent('.close', 'click', this.cancelClick)
     this.bindEvent('.btn-secondary', 'click', this.cancelClick)
-    this.bindEvent('submit', 'submit', this.submit)
+    this.bindEvent('form', 'submit', this.submit)
   }
 }
 

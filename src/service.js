@@ -21,14 +21,16 @@ export class Modals extends Service {
   }
 
   /**
-   * @constructs ModalService
+   * @constructs Modals
    */
   constructor (channelName) {
     super(channelName)
     this.views = []
   }
 
-  createElement (type) {}
+  createElement (type) {
+    return document.createElement(`nextbone-modal-${type}`)
+  }
 
   /**
    * @method open

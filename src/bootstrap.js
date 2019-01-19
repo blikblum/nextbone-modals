@@ -1,89 +1,87 @@
 import ModalService from './service'
-import { View, Region, mergeOptions } from 'backbone.marionette'
-import { ModalView, LayoutView, AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap-views'
+import $ from 'jquery'
+import { Region } from './region'
+import { AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap-views'
 
-const viewClassesNames = ['LayoutView', 'AlertView', 'PromptView', 'ConfirmView']
+const layoutTemplate = `
+<div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+`
 
-const BootstrapModalService = ModalService.extend({
-  LayoutView,
-  AlertView,
-  PromptView,
-  ConfirmView,
+const elementClasses = {
+  alert: AlertView,
+  prompt: PromptView,
+  confirm: ConfirmView
+}
 
-  _prepareViewClasses () {
-    viewClassesNames.forEach(className => {
-      let ViewClass = this[className]
-      if (typeof ViewClass !== 'function') {
-        throw new Error(`ModalService: expected ${className} to be a template function or View class`)
-      }
-      if (!(ViewClass.prototype instanceof View)) {
-        ViewClass = ModalView.extend({
-          template: ViewClass
-        })
-        this[className] = ViewClass
-      }
-    })
-  },
+class BootstrapModalService extends ModalService {
+  static setCaptions (captions = {}) {
+    Object.assign(defaultCaptions, captions)
+  }
 
   setup (options = {}) {
-    mergeOptions(this, options, viewClassesNames.concat(['el', 'container']))
+    this.container = options.container
     this._prepareViewClasses()
-  },
+  }
+
+  createElement (type) {
+    const name = `bootstrap-modal-${type}`
+    if (!customElements.get(name)) {
+      customElements.define(name, elementClasses[name])
+    }
+    return document.createElement(name)
+  }
 
   start () {
-    const layout = this.layout = new this.LayoutView()
-
     if (!this.container) {
-      if (!this.el) throw new Error('ModalService: container or el options must be defined')
-
-      this.container = new Region({
-        el: this.el
-      })
+      throw new Error('Bootstrap Modals: container option must be defined')
     }
-    this.container.show(layout)
 
-    layout.$el.modal({
+    const $container = $(this.container)
+
+    $container.html(layoutTemplate)
+
+    const $layout = this.$layout = $container.children().eq(0)
+
+    $layout.modal({
       show: false,
       backdrop: 'static'
     })
 
-    layout.$el.on({
+    $layout.on({
       'shown.bs.modal': (e) => this.trigger('modal:show', e),
       'hidden.bs.modal': (e) => this.trigger('modal:hide', e)
     })
 
     this.contentRegion = new Region({
-      el: layout.$('.modal-content')
+      el: $layout('.modal-content')
     })
-  },
+  }
 
   render (view) {
     this.contentRegion.show(view)
-  },
+  }
 
   remove () {
     this.contentRegion.empty()
-  },
+  }
 
   animateIn () {
     return new Promise(resolve => {
       this.once('modal:show', resolve)
-      this.layout.$el.modal('show')
+      this.$layout.modal('show')
     })
-  },
+  }
 
   animateOut () {
     return new Promise(resolve => {
       this.once('modal:hide', resolve)
-      this.layout.$el.modal('hide')
+      this.$layout.modal('hide')
     })
   }
-},
-// class methods
-{
-  setCaptions (captions = {}) {
-    Object.assign(defaultCaptions, captions)
-  }
-})
+}
 
 export default BootstrapModalService

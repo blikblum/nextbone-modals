@@ -1,6 +1,5 @@
 'use strict'
 
-const fs = require('fs')
 const del = require('del')
 const rollup = require('rollup')
 const babel = require('rollup-plugin-babel')
@@ -14,7 +13,7 @@ let dependencies = Object.assign({}, pkg.dependencies || {}, pkg.peerDependencie
 promise = promise.then(() => del(['dist/*']));
 
 // Compile source code into a distributable format with Babel
-['es', 'umd'].forEach((format) => {
+['es'].forEach((format) => {
   promise = promise.then(() => rollup.rollup({
     input: 'src/index.js',
     external: Object.keys(dependencies),
@@ -22,16 +21,9 @@ promise = promise.then(() => del(['dist/*']));
       exclude: 'node_modules/**'
     })]
   }).then(bundle => bundle.write({
-    file: `dist/${format === 'umd' ? 'marionette.modalservice' : 'marionette.modalservice.esm'}.js`,
+    file: `dist/nextbone-modals.js`,
     format,
-    sourcemap: true,
-    name: format === 'umd' ? 'Marionette.ModalService' : undefined,
-    globals: {
-      backbone: 'Backbone',
-      'backbone.marionette': 'Marionette',
-      'radio.service': 'RadioService',
-      'underscore': '_'
-    }
+    sourcemap: true
   })))
 })
 

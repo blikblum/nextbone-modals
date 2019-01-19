@@ -1,16 +1,15 @@
-import Service from 'radio.service'
+import { Service } from 'nextbone-service'
 import _ from 'underscore'
 
 /**
  * @class ModalService
  */
-const ModalService = Service.extend({
-
+class ModalService extends Service {
   /**
    * @abstract
    * @method requests
    */
-  requests () {
+  static get requests () {
     return {
       open: 'open',
       close: 'close',
@@ -19,16 +18,17 @@ const ModalService = Service.extend({
       prompt: 'prompt',
       dialog: 'dialog'
     }
-  },
+  }
 
   /**
    * @constructs ModalService
    */
-  constructor () {
+  constructor (channelName) {
+    super(channelName)
     this.views = []
+  }
 
-    Service.prototype.constructor.apply(this, arguments)
-  },
+  createElement (type) {}
 
   /**
    * @method open
@@ -37,6 +37,7 @@ const ModalService = Service.extend({
    */
   open (view, options) {
     let previousView
+    view.options = options
     return Promise.resolve().then(() => {
       this.trigger('before:open', view, options)
       this._isOpen = true
@@ -54,7 +55,7 @@ const ModalService = Service.extend({
     }).then(() => {
       this.trigger('open', view, options)
     })
-  },
+  }
 
   /**
    * @method close
@@ -103,7 +104,7 @@ const ModalService = Service.extend({
         _.map(views, view => this.trigger('close', view, options))
       }
     })
-  },
+  }
 
   /**
    * @method alert
@@ -112,7 +113,7 @@ const ModalService = Service.extend({
    */
   alert (options) {
     return new Promise((resolve, reject) => {
-      let view = new this.AlertView(options)
+      let view = this.createElement('alert')
       let promise = this.open(view, options)
 
       this.trigger('before:alert', view, options)
@@ -124,7 +125,7 @@ const ModalService = Service.extend({
           .then(() => resolve(), reject)
       })
     })
-  },
+  }
 
   /**
    * @method confirm
@@ -133,7 +134,7 @@ const ModalService = Service.extend({
    */
   confirm (options) {
     return new Promise((resolve, reject) => {
-      let view = new this.ConfirmView(options)
+      let view = this.createElement('confirm')
       let promise = this.open(view, options)
 
       this.trigger('before:confirm', view, options)
@@ -150,7 +151,7 @@ const ModalService = Service.extend({
         cancel: () => close(false)
       })
     })
-  },
+  }
 
   /**
    * @method prompt
@@ -158,7 +159,7 @@ const ModalService = Service.extend({
    */
   prompt (options) {
     return new Promise((resolve, reject) => {
-      let view = new this.PromptView(options)
+      let view = this.createElement('prompt')
       let promise = this.open(view, options)
 
       this.trigger('before:prompt', view, options)
@@ -175,7 +176,7 @@ const ModalService = Service.extend({
         cancel: () => close()
       })
     })
-  },
+  }
 
   dialog (view, options) {
     if (!view) {
@@ -198,7 +199,7 @@ const ModalService = Service.extend({
         cancel: () => close()
       })
     })
-  },
+  }
 
   /**
    * @method isOpen
@@ -206,37 +207,37 @@ const ModalService = Service.extend({
    */
   isOpen () {
     return !!this._isOpen
-  },
+  }
 
   /**
    * @abstract
    * @method render
    */
-  render () {},
+  render () {}
 
   /**
    * @abstract
    * @method remove
    */
-  remove () {},
+  remove () {}
 
   /**
    * @abstract
    * @method animateIn
    */
-  animateIn () {},
+  animateIn () {}
 
   /**
    * @abstract
    * @method animateSwap
    */
-  animateSwap () {},
+  animateSwap () {}
 
   /**
    * @abstract
    * @method animateOut
    */
   animateOut () {}
-})
+}
 
 export default ModalService

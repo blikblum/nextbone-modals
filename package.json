@@ -1,9 +1,9 @@
 {
-  "name": "marionette.modalservice",
+  "name": "nextbone-modals",
   "version": "0.7.0",
-  "description": "Modal service for Marionette",
-  "main": "dist/marionette.modalservice.js",
-  "module": "dist/marionette.modalservice.esm.js",
+  "description": "Modal service for Nextbone",
+  "main": "dist/nextbone-modals.js",
+  "module": "dist/nextbone-modals.js",
   "scripts": {
     "test": "jest",
     "build": "node tools/build",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/blikblum/marionette.modalservice.git"
+    "url": "https://github.com/blikblum/nextbone-modals.git"
   },
   "keywords": [
     "modal",
@@ -25,40 +25,34 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/blikblum/marionette.modalservice/issues"
+    "url": "https://github.com/blikblum/nextbone-modals/issues"
   },
-  "homepage": "https://github.com/blikblum/marionette.modalservice",
+  "homepage": "https://github.com/blikblum/nextbone-modals",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.0.1",
-    "babel-preset-env": "^1.7.0",
-    "backbone": "^1.3.3",
-    "backbone.marionette": "^4.0.0-alpha.1",
-    "backbone.radio": "^2.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-jest": "^24.0.0-alpha.12",
     "del": "^3.0.0",
-    "jest": "^23.0.1",
+    "jest": "^24.0.0-alpha.12",
     "jquery": "^3.3.1",
-    "rollup": "^0.58.2",
-    "rollup-plugin-babel": "^3.0.4",
-    "standard": "^11.0.1",
-    "underscore": "^1.9.0"
+    "nextbone": "^0.6.0",
+    "rollup": "^1.1.0",
+    "rollup-plugin-babel": "^4.0.1",
+    "standard": "^12.0.1",
+    "underscore": "^1.9.1"
   },
-  "peerDependencies": {
-    "backbone": "^1.3.3",
-    "backbone.marionette": "^4.0.0",
-    "underscore": "^1.8.3"
-  },
+  "peerDependencies": {},
   "dependencies": {
-    "radio.service": "^0.6.0"
+    "nextbone-service": "^0.6.0"
   },
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "targets": {
             "browsers": [
-              "ie 11"
+              "chrome 60"
             ]
           },
           "modules": false
@@ -69,7 +63,7 @@
       "test": {
         "presets": [
           [
-            "env",
+            "@babel/preset-env",
             {
               "targets": {
                 "node": "current"
@@ -84,5 +78,10 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/dist/"
     ]
+  },
+  "standard": {
+    "env": {
+      "browser": true
+    }
   }
 }

@@ -1,6 +1,3 @@
-import {Model} from 'backbone'
-import {View} from 'backbone.marionette'
-
 const defaultCaptions = {
   ok: 'OK',
   cancel: 'Cancel',
@@ -8,50 +5,39 @@ const defaultCaptions = {
   no: 'No'
 }
 
-const ModalView = View.extend({
-  initialize (options = {}) {
-    this.model = new Model(options)
-  },
+class BaseModal extends HTMLElement {
+  confirmClick () {
+    this.trigger('confirm')
+  }
 
-  triggers: {
-    'click .btn-primary': {event: 'confirm', preventDefault: false, stopPropagation: false},
-    'click .btn-secondary': 'cancel',
-    'click .close': 'cancel'
-  },
-
-  events: {
-    submit: 'submit'
-  },
+  cancelClick (e) {
+    e.stopPropagation()
+    e.preventDefault()
+    this.trigger('cancel')
+  }
 
   submit (e) {
     e.preventDefault()
-    var val = this.$('input').val()
+    const val = this.querySelector('input').value
     this.trigger('submit', val)
   }
-})
 
-// simple renderer for deafult views
-const renderer = (template, data) => template(data)
-
-const LayoutView = ModalView.extend({
-  className: 'modal fade',
-
-  attributes: {
-    'tabindex': -1,
-    'role': 'dialog'
-  },
-
-  template: function renderLayout () {
-    return `
-    <div class="modal-dialog">
-      <div class="modal-content"></div>
-    </div>
-    `
+  bindEvent (selector, event, listener) {
+    const el = this.querySelector(selector)
+    if (el) el.addEventListener(event, listener.bind(this))
   }
-}).setRenderer(renderer)
 
-const AlertView = ModalView.extend({
-  template: function renderAlert (data) {
+  connectedCallback () {
+    this.innerHTML = this.render(this.options)
+    this.bindEvent('.btn-primary', 'click', this.confirmClick)
+    this.bindEvent('.close', 'click', this.cancelClick)
+    this.bindEvent('.btn-secondary', 'click', this.cancelClick)
+    this.bindEvent('submit', 'submit', this.submit)
+  }
+}
+
+class AlertView extends BaseModal {
+  render (data) {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
@@ -67,35 +53,35 @@ const AlertView = ModalView.extend({
     </div>
     `
   }
-}).setRenderer(renderer)
+}
 
-const PromptView = ModalView.extend({
-  tagName: 'form',
-
-  template: function renderPrompt (data) {
+class PromptView extends BaseModal {
+  render (data) {
     return `
-    <div class="modal-header">
-      <h5 class="modal-title">${data.title}</h5>
-      <button type="button" class="close" aria-hidden="true">&times;</button>      
-    </div>
-
-    <div class="modal-body">
-      <div class="form-group">
-        <label for="modal__input--prompt">${data.text}</label>
-        <input id="modal__input--prompt" class="form-control" type="text" value="${data.value || ''}">
+    <form>
+      <div class="modal-header">
+        <h5 class="modal-title">${data.title}</h5>
+        <button type="button" class="close" aria-hidden="true">&times;</button>      
       </div>
-    </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary">${data.cancel || defaultCaptions.cancel}</button>
-      <button type="submit" class="btn btn-primary">${data.ok || defaultCaptions.ok}</button>
-    </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="modal__input--prompt">${data.text}</label>
+          <input id="modal__input--prompt" class="form-control" type="text" value="${data.value || ''}">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary">${data.cancel || defaultCaptions.cancel}</button>
+        <button type="submit" class="btn btn-primary">${data.ok || defaultCaptions.ok}</button>
+      </div>
+    </form>
     `
   }
-}).setRenderer(renderer)
+}
 
-const ConfirmView = ModalView.extend({
-  template: function renderConfirm (data) {
+class ConfirmView extends BaseModal {
+  render (data) {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
@@ -112,7 +98,6 @@ const ConfirmView = ModalView.extend({
     </div>      
     `
   }
+}
 
-}).setRenderer(renderer)
-
-export {ModalView, AlertView, LayoutView, ConfirmView, PromptView, defaultCaptions}
+export { AlertView, ConfirmView, PromptView, defaultCaptions }

@@ -24,7 +24,6 @@ class BootstrapModalService extends ModalService {
 
   setup (options = {}) {
     this.container = options.container
-    this._prepareViewClasses()
   }
 
   createElement (type) {
@@ -56,9 +55,7 @@ class BootstrapModalService extends ModalService {
       'hidden.bs.modal': (e) => this.trigger('modal:hide', e)
     })
 
-    this.contentRegion = new Region({
-      el: $layout('.modal-content')
-    })
+    this.contentRegion = new Region($layout('.modal-content')[0])
   }
 
   render (view) {

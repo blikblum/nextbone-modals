@@ -1,10 +1,7 @@
 var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var MiniCSSExtractPlugin = require('mini-css-extract-plugin')
-var {GenerateSW} = require('workbox-webpack-plugin')
 var CleanPlugin = require('clean-webpack-plugin')
-
-
 
 var DIST_DIR = 'dist'
 var devDevTool = 'source-map' // see https://webpack.js.org/configuration/devtool/ for options
@@ -14,9 +11,7 @@ var envPresetConfig = {
   modules: false,
   targets: {
     browsers: [
-      'ie 11',
-      'last 2 versions',
-      'Firefox ESR'
+      'chrome 60'
     ]
   }
 }
@@ -25,18 +20,12 @@ var plugins = [
   new MiniCSSExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
-    filename: "[name].css",
-    chunkFilename: "[id].css"
+    filename: '[name].css',
+    chunkFilename: '[id].css'
   }),
 
   new HtmlWebpackPlugin({
     template: path.resolve(__dirname, 'src/index.html')
-  }),
-
-  new GenerateSW({
-    globDirectory: DIST_DIR,
-    globPatterns: ['**/*.{html,js,css}'],
-    swDest: path.join(DIST_DIR, 'sw.js')
   })
 ]
 
@@ -58,39 +47,47 @@ module.exports = function (env) {
         use: [{
           loader: 'babel-loader',
           options: {
-            presets: [['env', envPresetConfig]],
-            plugins: ['transform-class-properties','transform-object-rest-spread','syntax-dynamic-import']
+            presets: [['@babel/preset-env', envPresetConfig]],
+            plugins: [
+              [
+                '@babel/plugin-proposal-decorators',
+                {
+                  'legacy': false,
+                  'decoratorsBeforeExport': false
+                }
+              ]
+            ]
           }
         }]
-    }, {
-      test: /\.css$/,
-      use: [
-        MiniCSSExtractPlugin.loader,
-        'css-loader'
-      ]
-    }, {
-      test: /\.(sass|scss)$/,
-      use: [MiniCSSExtractPlugin.loader, 'css-loader', 'sass-loader']
-     },{
-      test: /\.(woff|woff2)$/,
-      use: "url-loader?limit=10000&mimetype=application/font-woff"
-    }, {
-      test: /\.ttf$/,
-      use: "url-loader?limit=10000&mimetype=application/octet-stream"
-    }, {
-      test: /\.eot$/,
-      use: "file-loader"
-    }, {
-      test: /\.svg$/,
-      use: "url-loader?limit=10000&mimetype=image/svg+xml"
-    }, {
-      test: /^bootstrap\.js$/,
-      use: "imports-loader?jQuery=jquery,$=jquery,Popper=popper.js,this=>window"
-    }]
+      }, {
+        test: /\.css$/,
+        use: [
+          MiniCSSExtractPlugin.loader,
+          'css-loader'
+        ]
+      }, {
+        test: /\.(sass|scss)$/,
+        use: [MiniCSSExtractPlugin.loader, 'css-loader', 'sass-loader']
+      }, {
+        test: /\.(woff|woff2)$/,
+        use: 'url-loader?limit=10000&mimetype=application/font-woff'
+      }, {
+        test: /\.ttf$/,
+        use: 'url-loader?limit=10000&mimetype=application/octet-stream'
+      }, {
+        test: /\.eot$/,
+        use: 'file-loader'
+      }, {
+        test: /\.svg$/,
+        use: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      }, {
+        test: /^bootstrap\.js$/,
+        use: 'imports-loader?jQuery=jquery,$=jquery,Popper=popper.js,this=>window'
+      }]
     },
     resolve: {
-      modules: [path.resolve(__dirname, './src/common'), 'node_modules']
-    },    
+      symlinks: false
+    },
     plugins: plugins,
     devtool: isProd ? prodDevTool : devDevTool
   }

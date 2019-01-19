@@ -1,28 +1,29 @@
-# Marionette Modal Service
+# Nextbone Modals
 
-Simple modal service for MarionetteJS.
+Simple modal service for Nextbone.
 
 ## Usage
 
-### ModalService
+### Modals
 
 ```js
-import {ModalService} from 'marionette.modalservice';
+import $ from 'jquery'
+import { Modals } from 'nextbone-modals';
 import AlertView from './views/alert';
 import ConfirmView from './views/confirm';
 import PromptView from './views/prompt';
 
-const MyModalService = ModalService.extend({
-  AlertView   : AlertView,
-  ConfirmView : ConfirmView,
-  PromptView  : PromptView,
+customElements.define('nextbone-modal-alert', AlertView)
+customElements.define('nextbone-modal-confirm', ConfirmView)
+customElements.define('nextbone-modal-prompt', PromptView)
 
+class MyModalService extends Modals {
   initialize() {
     this.$el = $('<div class="modal-container"/>').appendTo(document.body);
   },
 
   render(view) {
-    this.$el.append(view.$el);
+    this.$el.append(view);
   },
 
   remove(view) {
@@ -31,14 +32,14 @@ const MyModalService = ModalService.extend({
 
   animateIn(view) {
     return new Promise(resolve => {
-      newView.$el.fadeIn(300, resolve);
+      $(view).fadeIn(300, resolve);
       this.$el.fadeIn(300, resolve);
     });
   },
 
   animateOut(view) {
     return new Promise(resolve => {
-      newView.$el.fadeOut(300, resolve);
+      $(view).fadeOut(300, resolve);
       this.$el.fadeOut(300, resolve);
     });
   },
@@ -47,7 +48,7 @@ const MyModalService = ModalService.extend({
     oldView.$el.hide();
     newView.$el.show();
   }
-});
+};
 
 const modalService = new ModalService();
 
@@ -93,17 +94,17 @@ modalService.request('close').then(() => {
 });
 ```
 
-### BootstrapModalService
+### BootstrapModals
 
 A preconfigured service to work with Bootstrap modals
 
 ```js
-import {BootstrapModalService} from 'marionette.modalservice';
+import { BootstrapModals } from 'nextbone-service';
 
-const modalService = new BootstrapModalService();
+const modalService = new BootstrapModals();
 
 modalService.setup({
-  el: '#modal-container'
+  container: '#modal-container'
 })
 
 // same usage as vanilla
@@ -132,4 +133,4 @@ npm test
 ===
 
 © 2015 James Kyle. Distributed under ISC license.
-© 2018 Luiz Américo
+© 2019 Luiz Américo

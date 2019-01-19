@@ -1,16 +1,16 @@
 /* eslint-env jest */
 
-import { ModalService as Service } from '../../src/index'
+import { Modals } from '../../src/index'
 import { Events } from 'nextbone'
 
 function View () {
 
 }
 
-describe('ModalService', function () {
+describe('Modals', function () {
   var ModalService
   beforeEach(function () {
-    ModalService = class extends Service {
+    ModalService = class extends Modals {
       createElement (type) {
         const result = document.createElement(`modal-${type}`)
         Events.extend(result)
@@ -440,7 +440,7 @@ describe('ModalService', function () {
 
     beforeEach(function () {
       dialogView = new Events()
-      modalService = new Service()
+      modalService = new Modals()
       openSpy = jest.spyOn(modalService, 'open')
       closeSpy = jest.spyOn(modalService, 'close')
       triggerSpy = jest.spyOn(modalService, 'trigger')

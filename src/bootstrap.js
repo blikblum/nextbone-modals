@@ -1,4 +1,4 @@
-import ModalService from './service'
+import { Modals } from './service'
 import $ from 'jquery'
 import { Region } from './region'
 import { AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap-views'
@@ -17,7 +17,7 @@ const elementClasses = {
   confirm: ConfirmView
 }
 
-class BootstrapModalService extends ModalService {
+export class BootstrapModals extends Modals {
   static setCaptions (captions = {}) {
     Object.assign(defaultCaptions, captions)
   }
@@ -80,5 +80,3 @@ class BootstrapModalService extends ModalService {
     })
   }
 }
-
-export default BootstrapModalService

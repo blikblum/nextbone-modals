@@ -2,9 +2,9 @@ import { Service } from 'nextbone-service'
 import _ from 'underscore'
 
 /**
- * @class ModalService
+ * @class Modals
  */
-class ModalService extends Service {
+export class Modals extends Service {
   /**
    * @abstract
    * @method requests
@@ -239,5 +239,3 @@ class ModalService extends Service {
    */
   animateOut () {}
 }
-
-export default ModalService

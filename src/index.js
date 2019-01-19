@@ -1,4 +1,4 @@
-import ModalService from './service'
-import BootstrapModalService from './bootstrap'
+import { Modals } from './service'
+import { BootstrapModals } from './bootstrap'
 
-export { ModalService, BootstrapModalService }
+export { Modals, BootstrapModals }

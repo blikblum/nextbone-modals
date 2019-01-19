@@ -3126,10 +3126,15 @@ needle@^2.2.0:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
-nextbone-service@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/nextbone-service/-/nextbone-service-0.6.0.tgz#90d1e533d74f6af1019f8b6e76bf82b247190136"
-  integrity sha512-1Z1cCVXHNtrbq+r90sW5ZqUN1XEk0r+OFF/QYwIjr8a8veW9TB8K0NOPyvr73Q8ctIrH4XLYpJCCQ0tJUjQm3A==
+nextbone-radio@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/nextbone-radio/-/nextbone-radio-0.1.0.tgz#16139809cf28621664f9bb7e0089730d8e6ac7f4"
+  integrity sha512-k7kOHz3xsug610oGpIyYVchUvfeNWMRMnqmgR2olNzGQ+3LtQb+IcGr1qmEg/oLXIZF1xkn9xj5y78/lk4x6GA==
+
+nextbone-service@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/nextbone-service/-/nextbone-service-0.6.1.tgz#64e9753cc44bcc173d1496ff2f3bd80b8cb17029"
+  integrity sha512-6pIX1JvPTwDv95JGkuP3alVf7hS6io9iaEvCQfA81Fh221lzP52XF+mKpqjhVHHObQkLvwJ9MaO31IsP45jB0Q==
 
 nextbone@^0.6.0:
   version "0.6.0"

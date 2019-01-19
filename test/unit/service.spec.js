@@ -1,18 +1,27 @@
 /* eslint-env jest */
 
-import {ModalService as Service} from '../../src/index'
-import {View, history} from 'backbone'
+import { ModalService as Service } from '../../src/index'
+import { Events } from 'nextbone'
+
+function View () {
+
+}
 
 describe('ModalService', function () {
   var ModalService
   beforeEach(function () {
-    ModalService = Service.extend({
-      render: jest.fn(),
-      remove: jest.fn(),
-      animateIn: jest.fn(),
-      animateOut: jest.fn(),
-      animateSwap: jest.fn()
-    })
+    ModalService = class extends Service {
+      createElement (type) {
+        const result = document.createElement(`modal-${type}`)
+        Events.extend(result)
+        return result
+      }
+    }
+    jest.spyOn(ModalService.prototype, 'render')
+    jest.spyOn(ModalService.prototype, 'remove')
+    jest.spyOn(ModalService.prototype, 'animateIn')
+    jest.spyOn(ModalService.prototype, 'animateOut')
+    jest.spyOn(ModalService.prototype, 'animateSwap')
   })
 
   describe('#open', function () {
@@ -195,8 +204,8 @@ describe('ModalService', function () {
     describe('when closing all modals', function () {
       var view1, view2
       beforeEach(function () {
-        view1 = {view1: true}
-        view2 = {view2: true}
+        view1 = { view1: true }
+        view2 = { view2: true }
         options = {}
         return modalService.open(view1).then(() => {
           return modalService.open(view2)
@@ -240,23 +249,23 @@ describe('ModalService', function () {
   })
 
   describe('#alert', function () {
-    var openSpy, closeSpy, triggerSpy
-    var alertView, ModalService, modalService, options
-    var AlertView = View.extend({
-      constructor () {
-        alertView = this
-        View.prototype.constructor.apply(this, arguments)
-      }
-    })
+    var openSpy, closeSpy, triggerSpy, createElementSpy
+    var alertView, modalService, options
     beforeEach(function () {
-      ModalService = Service.extend({
-        AlertView: AlertView
-      })
       modalService = new ModalService()
+      createElementSpy = jest.spyOn(modalService, 'createElement').mockImplementation(() => {
+        alertView = new Events()
+        return alertView
+      })
       openSpy = jest.spyOn(modalService, 'open')
       closeSpy = jest.spyOn(modalService, 'close')
       triggerSpy = jest.spyOn(modalService, 'trigger')
       options = {}
+    })
+
+    it('should call createElement with "alert" type', function () {
+      modalService.alert()
+      expect(createElementSpy).toHaveBeenCalledWith('alert')
     })
 
     it('should open the alert modal and resolve on confirm', function () {
@@ -298,25 +307,24 @@ describe('ModalService', function () {
   })
 
   describe('#confirm', function () {
-    var confirmView, ModalService, modalService, options
-    var openSpy, closeSpy, triggerSpy
+    var confirmView, modalService, options
+    var openSpy, closeSpy, triggerSpy, createElementSpy
 
-    var ConfirmView = View.extend({
-      constructor () {
-        confirmView = this
-        View.prototype.constructor.apply(this, arguments)
-      }
-    })
     beforeEach(function () {
-      confirmView = new View()
-      ModalService = Service.extend({
-        ConfirmView: ConfirmView
-      })
       modalService = new ModalService()
+      createElementSpy = jest.spyOn(modalService, 'createElement').mockImplementation(() => {
+        confirmView = new Events()
+        return confirmView
+      })
       openSpy = jest.spyOn(modalService, 'open')
       closeSpy = jest.spyOn(modalService, 'close')
       triggerSpy = jest.spyOn(modalService, 'trigger')
       options = {}
+    })
+
+    it('should call createElement with "confirm" type', function () {
+      modalService.confirm()
+      expect(createElementSpy).toHaveBeenCalledWith('confirm')
     })
 
     it('should open the confirm modal and resolve with true on confirm', function () {
@@ -364,28 +372,24 @@ describe('ModalService', function () {
   })
 
   describe('#prompt', function () {
-    var openSpy
-    var closeSpy
-    var triggerSpy
-    var promptView, modalService, ModalService, options
-
-    var PromptView = View.extend({
-      constructor () {
-        promptView = this
-        View.prototype.constructor.apply(this, arguments)
-      }
-    })
+    var openSpy, closeSpy, triggerSpy, createElementSpy
+    var promptView, modalService, options
 
     beforeEach(function () {
-      promptView = new View()
-      ModalService = Service.extend({
-        PromptView: PromptView
-      })
       modalService = new ModalService()
+      createElementSpy = jest.spyOn(modalService, 'createElement').mockImplementation(() => {
+        promptView = new Events()
+        return promptView
+      })
       openSpy = jest.spyOn(modalService, 'open')
       closeSpy = jest.spyOn(modalService, 'close')
       triggerSpy = jest.spyOn(modalService, 'trigger')
       options = {}
+    })
+
+    it('should call createElement with "prompt" type', function () {
+      modalService.prompt()
+      expect(createElementSpy).toHaveBeenCalledWith('prompt')
     })
 
     it('should open the prompt modal and resolve with string on submit', function () {
@@ -402,7 +406,7 @@ describe('ModalService', function () {
       modalService.on('open', () => promptView.trigger('cancel', 'devilsAdvocateString'))
 
       return modalService.prompt().then(result => {
-        expect(result).toBeUndefined
+        expect(result).toBeUndefined()
         expect(openSpy).toHaveBeenCalledWith(promptView, undefined)
         expect(closeSpy).toHaveBeenCalledWith(promptView, undefined)
       })
@@ -434,10 +438,8 @@ describe('ModalService', function () {
     var triggerSpy
     var dialogView, modalService, options
 
-    var DialogView = View.extend({})
-
     beforeEach(function () {
-      dialogView = new DialogView()
+      dialogView = new Events()
       modalService = new Service()
       openSpy = jest.spyOn(modalService, 'open')
       closeSpy = jest.spyOn(modalService, 'close')
@@ -450,7 +452,7 @@ describe('ModalService', function () {
     })
 
     it('should open the dialog modal and resolve with arbitrary data on submit', function () {
-      const data = {key: 'value'}
+      const data = { key: 'value' }
       modalService.on('open', () => dialogView.trigger('submit', data))
 
       return modalService.dialog(dialogView).then(result => {
@@ -501,13 +503,13 @@ describe('ModalService', function () {
     })
 
     it('should return true when opened', function () {
-      return modalService.open().then(() => {
+      return modalService.open({}).then(() => {
         expect(modalService.isOpen()).toBe(true)
       })
     })
 
     it('should return false after closed', function () {
-      return modalService.open().then(() => {
+      return modalService.open({}).then(() => {
         return modalService.close()
       }).then(() => {
         expect(modalService.isOpen()).toBe(false)
@@ -566,41 +568,6 @@ describe('ModalService', function () {
       dialogSpy.mockImplementation(() => {})
       return modalService.request('dialog').then(() => {
         expect(dialogSpy).toHaveBeenCalled()
-      })
-    })
-  })
-
-  describe('Backbone.history', function () {
-    var view1, view2, modalService, closeSpy
-    beforeEach(function () {
-      view1 = new View()
-      view2 = new View()
-      modalService = new ModalService()
-
-      closeSpy = jest.spyOn(modalService, 'close')
-
-      history.fragment = 'current'
-
-      return Promise.all([
-        modalService.open(view1),
-        modalService.open(view2)
-      ])
-    })
-
-    it('should close all modals when changing routes', function () {
-      history.fragment = 'new-route'
-      history.trigger('route')
-
-      return Promise.resolve().then(() => {
-        expect(closeSpy).toHaveBeenCalled
-      })
-    })
-
-    it('should not close all modals when not route change is fired on the same route', function () {
-      history.trigger('route')
-
-      return Promise.resolve().then(() => {
-        expect(closeSpy).not.toHaveBeenCalled
       })
     })
   })

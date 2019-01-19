@@ -1,12 +1,13 @@
 import { Service } from 'nextbone-service';
 import _ from 'underscore';
 import $ from 'jquery';
+import { Events } from 'nextbone';
 
 /**
- * @class ModalService
+ * @class Modals
  */
 
-class ModalService extends Service {
+class Modals extends Service {
   /**
    * @abstract
    * @method requests
@@ -22,7 +23,7 @@ class ModalService extends Service {
     };
   }
   /**
-   * @constructs ModalService
+   * @constructs Modals
    */
 
 
@@ -31,7 +32,9 @@ class ModalService extends Service {
     this.views = [];
   }
 
-  createElement(type) {}
+  createElement(type) {
+    return document.createElement(`nextbone-modal-${type}`);
+  }
   /**
    * @method open
    * @param {Backbone.View} [view]
@@ -312,6 +315,8 @@ class BaseModal extends HTMLElement {
 
 }
 
+Events.extend(BaseModal.prototype);
+
 class AlertView extends BaseModal {
   render(data) {
     return `
@@ -391,23 +396,20 @@ const elementClasses = {
   prompt: PromptView,
   confirm: ConfirmView
 };
-
-class BootstrapModalService extends ModalService {
+class BootstrapModals extends Modals {
   static setCaptions(captions = {}) {
     Object.assign(defaultCaptions, captions);
   }
 
   setup(options = {}) {
     this.container = options.container;
-
-    this._prepareViewClasses();
   }
 
   createElement(type) {
     const name = `bootstrap-modal-${type}`;
 
     if (!customElements.get(name)) {
-      customElements.define(name, elementClasses[name]);
+      customElements.define(name, elementClasses[type]);
     }
 
     return document.createElement(name);
@@ -415,10 +417,15 @@ class BootstrapModalService extends ModalService {
 
   start() {
     if (!this.container) {
-      throw new Error('Bootstrap Modals: container option must be defined');
+      throw new Error('Bootstrap Modals: container option is not defined');
     }
 
     const $container = $(this.container);
+
+    if (!$container.length) {
+      throw new Error(`Bootstrap Modals: unable to find container element (${this.container})`);
+    }
+
     $container.html(layoutTemplate);
     const $layout = this.$layout = $container.children().eq(0);
     $layout.modal({
@@ -429,9 +436,7 @@ class BootstrapModalService extends ModalService {
       'shown.bs.modal': e => this.trigger('modal:show', e),
       'hidden.bs.modal': e => this.trigger('modal:hide', e)
     });
-    this.contentRegion = new Region({
-      el: $layout('.modal-content')
-    });
+    this.contentRegion = new Region($layout.find('.modal-content')[0]);
   }
 
   render(view) {
@@ -458,5 +463,5 @@ class BootstrapModalService extends ModalService {
 
 }
 
-export { ModalService, BootstrapModalService };
+export { Modals, BootstrapModals };
 //# sourceMappingURL=nextbone-modals.js.map

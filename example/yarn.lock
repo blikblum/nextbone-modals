@@ -4307,9 +4307,10 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
-jquery@^3.2.1:
+jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.5"
@@ -5023,19 +5024,19 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-nextbone-modals@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.7.0.tgz#7ec85ed63f34d4d3993ec43b0db95982f17c5ca3"
-  integrity sha512-uo2DS+VzGuEGR/I4yvNlzjlcZ5BZYR01/NOgjYwsHMneLtmmGQ1bL8EHOYu+utyy0N6bq2ONZRZYTFJImpu6hw==
+nextbone-modals@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.8.2.tgz#263a10d3cbca4e84af4409a78fafd3d535e1657f"
+  integrity sha512-XxBC0DhJ80UwbGDf3caFQz0Bwacxr7tXaIPzWmusFcJZDrQYNssz4QSUqaueNs+PMPpHVrGwC+uG4dYdyKXrIA==
   dependencies:
-    nextbone-service "^0.6.0"
+    nextbone-service "^0.6.1"
 
 nextbone-radio@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/nextbone-radio/-/nextbone-radio-0.1.0.tgz#16139809cf28621664f9bb7e0089730d8e6ac7f4"
   integrity sha512-k7kOHz3xsug610oGpIyYVchUvfeNWMRMnqmgR2olNzGQ+3LtQb+IcGr1qmEg/oLXIZF1xkn9xj5y78/lk4x6GA==
 
-nextbone-service@^0.6.0:
+nextbone-service@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/nextbone-service/-/nextbone-service-0.6.1.tgz#64e9753cc44bcc173d1496ff2f3bd80b8cb17029"
   integrity sha512-6pIX1JvPTwDv95JGkuP3alVf7hS6io9iaEvCQfA81Fh221lzP52XF+mKpqjhVHHObQkLvwJ9MaO31IsP45jB0Q==

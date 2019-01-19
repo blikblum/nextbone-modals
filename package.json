@@ -1,6 +1,6 @@
 {
   "name": "nextbone-modals",
-  "version": "0.7.0",
+  "version": "0.8.2",
   "description": "Modal service for Nextbone",
   "main": "dist/nextbone-modals.js",
   "module": "dist/nextbone-modals.js",
@@ -19,7 +19,7 @@
     "bootstrap",
     "backbone"
   ],
-  "author": "Luiz Américo Pereira Câmara",  
+  "author": "Luiz Américo Pereira Câmara",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/blikblum/nextbone-modals/issues"

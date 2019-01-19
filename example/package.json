@@ -9,9 +9,9 @@
   "dependencies": {
     "bootstrap": "4.2.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.3.1",
     "nextbone": "^0.7.0",
-    "nextbone-modals": "^0.7.0",
+    "nextbone-modals": "^0.8.2",
     "nextbone-radio": "^0.1.0",
     "popper.js": "^1.14.6",
     "underscore": "^1.9.1"

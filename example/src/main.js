@@ -1,5 +1,6 @@
 import './setup'
 import { BootstrapModals } from 'nextbone-modals'
+import $ from 'jquery'
 import { event } from 'nextbone'
 
 const modals = new BootstrapModals()
@@ -59,7 +60,7 @@ class ModalsExample extends HTMLElement {
   }
 
   log (type, msg) {
-    this.$('#log').append(`${type}: ${msg} <br/>`)
+    $(this).find('#log').append(`${type}: ${msg} <br/>`)
   }  
 }
 

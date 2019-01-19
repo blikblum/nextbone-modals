@@ -5024,10 +5024,10 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-nextbone-modals@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.8.2.tgz#263a10d3cbca4e84af4409a78fafd3d535e1657f"
-  integrity sha512-XxBC0DhJ80UwbGDf3caFQz0Bwacxr7tXaIPzWmusFcJZDrQYNssz4QSUqaueNs+PMPpHVrGwC+uG4dYdyKXrIA==
+nextbone-modals@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.8.3.tgz#a63ca6a55d19eaad553552959da5687e1271063f"
+  integrity sha512-jD93Y4ltFtCZhFb8Vk5T6S57nKtCvQ9JHG0xg1jmfPZFVpLdD/EFs6JjMMfCfe4Ie9r30Kb4647LagoXc+NkaA==
   dependencies:
     nextbone-service "^0.6.1"
 

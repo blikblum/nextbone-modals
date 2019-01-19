@@ -36,10 +36,13 @@ export class BootstrapModals extends Modals {
 
   start () {
     if (!this.container) {
-      throw new Error('Bootstrap Modals: container option must be defined')
+      throw new Error('Bootstrap Modals: container option is not defined')
     }
 
     const $container = $(this.container)
+    if (!$container.length) {
+      throw new Error(`Bootstrap Modals: unable to find container element (${this.container})`)
+    }
 
     $container.html(layoutTemplate)
 
@@ -55,7 +58,7 @@ export class BootstrapModals extends Modals {
       'hidden.bs.modal': (e) => this.trigger('modal:hide', e)
     })
 
-    this.contentRegion = new Region($layout('.modal-content')[0])
+    this.contentRegion = new Region($layout.find('.modal-content')[0])
   }
 
   render (view) {

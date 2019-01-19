@@ -1,3 +1,5 @@
+import { Events } from 'nextbone'
+
 const defaultCaptions = {
   ok: 'OK',
   cancel: 'Cancel',
@@ -35,6 +37,8 @@ class BaseModal extends HTMLElement {
     this.bindEvent('submit', 'submit', this.submit)
   }
 }
+
+Events.extend(BaseModal.prototype)
 
 class AlertView extends BaseModal {
   render (data) {

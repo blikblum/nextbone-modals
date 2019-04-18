@@ -263,8 +263,11 @@ describe('Modals', function () {
       options = {}
     })
 
-    it('should call createElement with "alert" type', function () {
-      modalService.alert()
+    it('should call createElement with "alert" type', async function () {
+      const alert = modalService.alert()
+      await Promise.resolve()
+      alertView.trigger('confirm')
+      await alert
       expect(createElementSpy).toHaveBeenCalledWith('alert')
     })
 
@@ -322,8 +325,11 @@ describe('Modals', function () {
       options = {}
     })
 
-    it('should call createElement with "confirm" type', function () {
-      modalService.confirm()
+    it('should call createElement with "confirm" type', async function () {
+      const confirm = modalService.confirm()
+      await Promise.resolve()
+      confirmView.trigger('confirm')
+      await confirm
       expect(createElementSpy).toHaveBeenCalledWith('confirm')
     })
 
@@ -387,8 +393,11 @@ describe('Modals', function () {
       options = {}
     })
 
-    it('should call createElement with "prompt" type', function () {
-      modalService.prompt()
+    it('should call createElement with "prompt" type', async function () {
+      const prompt = modalService.prompt()
+      await Promise.resolve()
+      promptView.trigger('submit')
+      await prompt
       expect(createElementSpy).toHaveBeenCalledWith('prompt')
     })
 
@@ -448,7 +457,7 @@ describe('Modals', function () {
     })
 
     it('should throws when a view instance is not passed as option', function () {
-      return expect(() => { modalService.dialog() }).toThrow('ModalService: no view option passed to dialog')
+      return expect(modalService.dialog()).rejects.toThrow('ModalService: no view option passed to dialog')
     })
 
     it('should open the dialog modal and resolve with arbitrary data on submit', function () {
@@ -513,61 +522,6 @@ describe('Modals', function () {
         return modalService.close()
       }).then(() => {
         expect(modalService.isOpen()).toBe(false)
-      })
-    })
-  })
-
-  describe('requests', function () {
-    var modalService
-    beforeEach(function () {
-      modalService = new ModalService()
-    })
-
-    it('should have a request for open', function () {
-      var openSpy = jest.spyOn(modalService, 'open')
-      openSpy.mockImplementation(() => {})
-      return modalService.request('open').then(() => {
-        expect(openSpy).toHaveBeenCalled()
-      })
-    })
-
-    it('should have a request for close', function () {
-      var closeSpy = jest.spyOn(modalService, 'close')
-      closeSpy.mockImplementation(() => {})
-      return modalService.request('close').then(() => {
-        expect(closeSpy).toHaveBeenCalled()
-      })
-    })
-
-    it('should have a request for alert', function () {
-      var alertSpy = jest.spyOn(modalService, 'alert')
-      alertSpy.mockImplementation(() => {})
-      return modalService.request('alert').then(() => {
-        expect(alertSpy).toHaveBeenCalled()
-      })
-    })
-
-    it('should have a request for confirm', function () {
-      var confirmSpy = jest.spyOn(modalService, 'confirm')
-      confirmSpy.mockImplementation(() => {})
-      return modalService.request('confirm').then(() => {
-        expect(confirmSpy).toHaveBeenCalled()
-      })
-    })
-
-    it('should have a request for prompt', function () {
-      var promptSpy = jest.spyOn(modalService, 'prompt')
-      promptSpy.mockImplementation(() => {})
-      return modalService.request('prompt').then(() => {
-        expect(promptSpy).toHaveBeenCalled()
-      })
-    })
-
-    it('should have a request for dialog', function () {
-      var dialogSpy = jest.spyOn(modalService, 'dialog')
-      dialogSpy.mockImplementation(() => {})
-      return modalService.request('dialog').then(() => {
-        expect(dialogSpy).toHaveBeenCalled()
       })
     })
   })

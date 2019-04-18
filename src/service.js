@@ -1,25 +1,11 @@
-import { Service } from 'nextbone-service'
+import { Events } from 'nextbone'
+import { defineAsyncMethods } from 'nextbone/service'
 import _ from 'underscore'
 
 /**
  * @class Modals
  */
-export class Modals extends Service {
-  /**
-   * @abstract
-   * @method requests
-   */
-  static get requests () {
-    return {
-      open: 'open',
-      close: 'close',
-      alert: 'alert',
-      confirm: 'confirm',
-      prompt: 'prompt',
-      dialog: 'dialog'
-    }
-  }
-
+export class Modals extends Events {
   /**
    * @constructs Modals
    */
@@ -241,3 +227,6 @@ export class Modals extends Service {
    */
   animateOut () {}
 }
+
+
+defineAsyncMethods(Modals, ['open', 'close', 'alert', 'confirm', 'prompt', 'dialog'])

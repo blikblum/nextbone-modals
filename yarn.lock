@@ -3126,20 +3126,10 @@ needle@^2.2.0:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
-nextbone-radio@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/nextbone-radio/-/nextbone-radio-0.1.0.tgz#16139809cf28621664f9bb7e0089730d8e6ac7f4"
-  integrity sha512-k7kOHz3xsug610oGpIyYVchUvfeNWMRMnqmgR2olNzGQ+3LtQb+IcGr1qmEg/oLXIZF1xkn9xj5y78/lk4x6GA==
-
-nextbone-service@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/nextbone-service/-/nextbone-service-0.6.1.tgz#64e9753cc44bcc173d1496ff2f3bd80b8cb17029"
-  integrity sha512-6pIX1JvPTwDv95JGkuP3alVf7hS6io9iaEvCQfA81Fh221lzP52XF+mKpqjhVHHObQkLvwJ9MaO31IsP45jB0Q==
-
-nextbone@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.6.0.tgz#da4bc0a761a09898b121c088f48f56e756444c4a"
-  integrity sha512-NoE8n+NY6X4dBIY9jjAndvzfQcb9Q04BwdrdQL8vL/rBKJbO8sqol/K1G12wkeBowBp1FtnMplow33laDUy5Qw==
+nextbone@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.10.0.tgz#c6fe76c3f53e058ef2d46c6c8c8803dfee1377ee"
+  integrity sha512-MiPdi4CdJMUP7qiDK9o8RpS1q2NLu9Bp7QJ2/N07SKAi1Gm3O+LWQWeHbZpq+7nhJbr8zCHqJe/v5z+VKUhIGw==
   dependencies:
     underscore ">=1.8.3"
 

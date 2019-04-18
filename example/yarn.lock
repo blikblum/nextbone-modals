@@ -5024,27 +5024,15 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-nextbone-modals@^0.8.3:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.8.3.tgz#a63ca6a55d19eaad553552959da5687e1271063f"
-  integrity sha512-jD93Y4ltFtCZhFb8Vk5T6S57nKtCvQ9JHG0xg1jmfPZFVpLdD/EFs6JjMMfCfe4Ie9r30Kb4647LagoXc+NkaA==
-  dependencies:
-    nextbone-service "^0.6.1"
+nextbone-modals@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.9.0.tgz#fa60d5d53ab832aa080b6c10283964328233ffd4"
+  integrity sha512-Fj0OB3HeFo8ULIT9snyd/OeppvwNYPxQCYeQXc4uUxCfVailzP/z6ncXCYji0K8sB3U23pMSX5FwJ/7OVkmNMg==
 
-nextbone-radio@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/nextbone-radio/-/nextbone-radio-0.1.0.tgz#16139809cf28621664f9bb7e0089730d8e6ac7f4"
-  integrity sha512-k7kOHz3xsug610oGpIyYVchUvfeNWMRMnqmgR2olNzGQ+3LtQb+IcGr1qmEg/oLXIZF1xkn9xj5y78/lk4x6GA==
-
-nextbone-service@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/nextbone-service/-/nextbone-service-0.6.1.tgz#64e9753cc44bcc173d1496ff2f3bd80b8cb17029"
-  integrity sha512-6pIX1JvPTwDv95JGkuP3alVf7hS6io9iaEvCQfA81Fh221lzP52XF+mKpqjhVHHObQkLvwJ9MaO31IsP45jB0Q==
-
-nextbone@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.7.0.tgz#12e5c62620ab3b943f99f54eefabf816d6e8420e"
-  integrity sha512-XTMZSwdfCXbLN2YQkwO94owvtu43xMJ0URo4qNEvRdmulvC/bW5OzPCPAf5kHYT9DagvxqLdKh8E5tBi6CUnOQ==
+nextbone@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.10.0.tgz#c6fe76c3f53e058ef2d46c6c8c8803dfee1377ee"
+  integrity sha512-MiPdi4CdJMUP7qiDK9o8RpS1q2NLu9Bp7QJ2/N07SKAi1Gm3O+LWQWeHbZpq+7nhJbr8zCHqJe/v5z+VKUhIGw==
   dependencies:
     underscore ">=1.8.3"
 

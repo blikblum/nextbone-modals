@@ -36,7 +36,7 @@ class ModalsExample extends HTMLElement {
 
   @event('click', '#alert')
   showAlert (e) {
-    modals.request('alert', {
+    modals.alert({
       title: 'Alert',
       text: `You are in danger!`
     }).then(val => this.log('alert', val))
@@ -44,7 +44,7 @@ class ModalsExample extends HTMLElement {
 
   @event('click', '#confirm')
   showConfirm (e) {
-    modals.request('confirm', {
+    modals.confirm({
       title: 'Confirmation',
       text: `Should i stay? Or should i go?`
     }).then(val => this.log('confirm', val))
@@ -52,7 +52,7 @@ class ModalsExample extends HTMLElement {
 
   @event('click', '#prompt')
   showPrompt (e) {
-    modals.request('prompt', {
+    modals.prompt({
       title: 'Prompt',
       text: `What is your name?`,
       value: 'Waldo'

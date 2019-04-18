@@ -1,32 +1,16 @@
-import { Service } from 'nextbone-service';
-import _ from 'underscore';
-import $ from 'jquery';
 import { Events } from 'nextbone';
+import { defineAsyncMethods } from 'nextbone/service';
+import { last, without } from 'underscore';
+import $ from 'jquery';
 
 /**
  * @class Modals
  */
 
-class Modals extends Service {
-  /**
-   * @abstract
-   * @method requests
-   */
-  static get requests() {
-    return {
-      open: 'open',
-      close: 'close',
-      alert: 'alert',
-      confirm: 'confirm',
-      prompt: 'prompt',
-      dialog: 'dialog'
-    };
-  }
+class Modals extends Events {
   /**
    * @constructs Modals
    */
-
-
   constructor(channelName) {
     super(channelName);
     this.views = [];
@@ -48,7 +32,7 @@ class Modals extends Service {
     return Promise.resolve().then(() => {
       this.trigger('before:open', view, options);
       this._isOpen = true;
-      previousView = _.last(this.views);
+      previousView = last(this.views);
       this.views.push(view);
       return this.render(view, options);
     }).then(() => {
@@ -75,19 +59,19 @@ class Modals extends Service {
       if (view) {
         this.trigger('before:close', view, options);
       } else {
-        _.map(this.views, view => this.trigger('before:close', view, options));
+        this.views.map(view => this.trigger('before:close', view, options));
       }
 
       this._isOpen = false;
 
       if (view) {
-        views = this.views = _.without(this.views, view);
+        views = this.views = without(this.views, view);
       } else {
         views = this.views;
         this.views = [];
       }
 
-      previousView = _.last(views);
+      previousView = last(views);
 
       if (view && previousView) {
         return this.animateSwap(view, previousView, options);
@@ -100,13 +84,13 @@ class Modals extends Service {
       if (view) {
         return this.remove(view, options);
       } else {
-        return Promise.all(_.map(views, view => this.remove(view, options)));
+        return Promise.all(views.map(view => this.remove(view, options)));
       }
     }).then(() => {
       if (view) {
         this.trigger('close', view, options);
       } else {
-        _.map(views, view => this.trigger('close', view, options));
+        views.map(view => this.trigger('close', view, options));
       }
     });
   }
@@ -238,6 +222,7 @@ class Modals extends Service {
   animateOut() {}
 
 }
+defineAsyncMethods(Modals, ['open', 'close', 'alert', 'confirm', 'prompt', 'dialog']);
 
 class Region {
   constructor(targetEl) {

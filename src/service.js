@@ -1,6 +1,6 @@
 import { Events } from 'nextbone'
 import { defineAsyncMethods } from 'nextbone/service'
-import _ from 'underscore'
+import { last, without } from 'underscore'
 
 /**
  * @class Modals
@@ -30,7 +30,7 @@ export class Modals extends Events {
       this.trigger('before:open', view, options)
       this._isOpen = true
 
-      previousView = _.last(this.views)
+      previousView = last(this.views)
       this.views.push(view)
 
       return this.render(view, options)
@@ -58,19 +58,19 @@ export class Modals extends Events {
       if (view) {
         this.trigger('before:close', view, options)
       } else {
-        _.map(this.views, view => this.trigger('before:close', view, options))
+        this.views.map(view => this.trigger('before:close', view, options))
       }
 
       this._isOpen = false
 
       if (view) {
-        views = this.views = _.without(this.views, view)
+        views = this.views = without(this.views, view)
       } else {
         views = this.views
         this.views = []
       }
 
-      previousView = _.last(views)
+      previousView = last(views)
 
       if (view && previousView) {
         return this.animateSwap(view, previousView, options)
@@ -83,13 +83,13 @@ export class Modals extends Events {
       if (view) {
         return this.remove(view, options)
       } else {
-        return Promise.all(_.map(views, view => this.remove(view, options)))
+        return Promise.all(views.map(view => this.remove(view, options)))
       }
     }).then(() => {
       if (view) {
         this.trigger('close', view, options)
       } else {
-        _.map(views, view => this.trigger('close', view, options))
+        views.map(view => this.trigger('close', view, options))
       }
     })
   }

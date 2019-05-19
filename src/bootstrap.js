@@ -1,6 +1,6 @@
-import { Modals } from './service'
 import $ from 'jquery'
-import { Region } from './region'
+import { Region } from 'nextbone/dom-utils'
+import { Modals } from './service'
 import { AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap-views'
 
 const layoutTemplate = `

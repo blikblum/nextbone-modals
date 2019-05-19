@@ -20,7 +20,7 @@ export class Modals extends Events {
 
   /**
    * @method open
-   * @param {Backbone.View} [view]
+   * @param {HTMLElement} [view]
    * @returns {Promise}
    */
   open (view, options) {
@@ -47,7 +47,7 @@ export class Modals extends Events {
 
   /**
    * @method close
-   * @param {Backbone.View} [view]
+   * @param {HTMLElement} [view]
    * @returns {Promise}
    */
   close (view, options) {
@@ -229,4 +229,4 @@ export class Modals extends Events {
 }
 
 
-defineAsyncMethods(Modals, ['open', 'close', 'alert', 'confirm', 'prompt', 'dialog'])
+defineAsyncMethods(Modals, ['open', 'close', 'confirm', 'prompt', 'dialog'])

@@ -2,6 +2,7 @@ import { Events } from 'nextbone';
 import { defineAsyncMethods } from 'nextbone/service';
 import { last, without } from 'underscore';
 import $ from 'jquery';
+import { Region } from 'nextbone/dom-utils';
 
 /**
  * @class Modals
@@ -21,7 +22,7 @@ class Modals extends Events {
   }
   /**
    * @method open
-   * @param {Backbone.View} [view]
+   * @param {HTMLElement} [view]
    * @returns {Promise}
    */
 
@@ -47,7 +48,7 @@ class Modals extends Events {
   }
   /**
    * @method close
-   * @param {Backbone.View} [view]
+   * @param {HTMLElement} [view]
    * @returns {Promise}
    */
 
@@ -222,44 +223,7 @@ class Modals extends Events {
   animateOut() {}
 
 }
-defineAsyncMethods(Modals, ['open', 'close', 'alert', 'confirm', 'prompt', 'dialog']);
-
-class Region {
-  constructor(targetEl) {
-    this.targetEl = targetEl;
-    this.isSwappingEl = false;
-    this.currentEl = undefined;
-  }
-
-  show(el) {
-    this.isSwappingEl = this.currentEl !== undefined;
-
-    if (this.currentEl) {
-      this.empty();
-    }
-
-    this.attachEl(el);
-    this.currentEl = el;
-    this.isSwappingEl = false;
-  }
-
-  empty() {
-    if (this.currentEl) {
-      this.detachEl(this.currentEl);
-    }
-
-    this.currentEl = undefined;
-  }
-
-  attachEl(el) {
-    this.targetEl.appendChild(el);
-  }
-
-  detachEl(el) {
-    this.targetEl.removeChild(el);
-  }
-
-}
+defineAsyncMethods(Modals, ['open', 'close', 'confirm', 'prompt', 'dialog']);
 
 const defaultCaptions = {
   ok: 'OK',
@@ -448,5 +412,5 @@ class BootstrapModals extends Modals {
 
 }
 
-export { Modals, BootstrapModals };
+export { BootstrapModals, Modals };
 //# sourceMappingURL=nextbone-modals.js.map

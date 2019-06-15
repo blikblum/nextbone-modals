@@ -99,7 +99,7 @@ export class Modals extends Events {
    * @param {Object} [options]
    * @returns {Promise}
    */
-  alert (options) {
+  alert (options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('alert')
       let promise = this.open(view, options)
@@ -120,7 +120,7 @@ export class Modals extends Events {
    * @param {Object} [options]
    * @returns {Promise}
    */
-  confirm (options) {
+  confirm (options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('confirm')
       let promise = this.open(view, options)
@@ -145,7 +145,7 @@ export class Modals extends Events {
    * @method prompt
    * @returns {Promise}
    */
-  prompt (options) {
+  prompt (options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('prompt')
       let promise = this.open(view, options)
@@ -166,7 +166,7 @@ export class Modals extends Events {
     })
   }
 
-  dialog (view, options) {
+  dialog (view, options = {}) {
     if (!view) {
       throw new Error('ModalService: no view option passed to dialog')
     }

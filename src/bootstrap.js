@@ -59,6 +59,31 @@ export class BootstrapModals extends Modals {
     })
 
     this.contentRegion = new Region($layout.find('.modal-content')[0])
+
+    const $dialog = $layout.find('.modal-dialog')
+
+    this.on('before:open', (view, options) => {
+      const {size, scrollable, centered} = options
+      let dialogClasses = ''
+      if (size) {
+        dialogClasses += ` modal-${size}`
+      }
+      if (scrollable) {
+        dialogClasses += ` modal-dialog-scrollable`
+      }
+      if (centered) {
+        dialogClasses += ` modal-dialog-centered`
+      }
+
+      if (dialogClasses) {
+        $dialog.addClass(dialogClasses)
+      }
+      this.__dialogClasses = dialogClasses
+    })
+
+    this.on('close', () => {
+      $dialog.removeClass(this.__dialogClasses)
+    })
   }
 
   render (view) {

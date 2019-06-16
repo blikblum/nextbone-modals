@@ -1724,10 +1724,10 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.2.1.tgz#8f8bdca024dbf0e8644da32e918c8a03a90a5757"
-  integrity sha512-tt/7vIv3Gm2mnd/WeDx36nfGGHleil0Wg8IeB7eMrVkY0fZ5iTaBisSh8oNANc2IBsCc6vCgCNTIM/IEN0+50Q==
+bootstrap@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.3.1.tgz#280ca8f610504d99d7b6b4bfc4b68cec601704ac"
+  integrity sha512-rXqOmH1VilAt2DyPzluTi2blhk17bO7ef+zLLPlWvG494pDxcM234pJ8wTc/6R40UWizAIIMgxjvxZg5kmsbag==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -4307,10 +4307,10 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
-jquery@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
-  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
+jquery@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
+  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.5"
@@ -5024,15 +5024,15 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-nextbone-modals@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.9.0.tgz#fa60d5d53ab832aa080b6c10283964328233ffd4"
-  integrity sha512-Fj0OB3HeFo8ULIT9snyd/OeppvwNYPxQCYeQXc4uUxCfVailzP/z6ncXCYji0K8sB3U23pMSX5FwJ/7OVkmNMg==
+nextbone-modals@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/nextbone-modals/-/nextbone-modals-0.11.0.tgz#308a671a21f72aa6b606277036a0e4924580137d"
+  integrity sha512-XCMrEaGevSZib8nD9Iv9qzStJE1vBCpd7zQC7QC1/E5+PlZE41uJa73tN6zEKJAgCl7H1bkV+eMREH91uAtZrg==
 
-nextbone@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.10.0.tgz#c6fe76c3f53e058ef2d46c6c8c8803dfee1377ee"
-  integrity sha512-MiPdi4CdJMUP7qiDK9o8RpS1q2NLu9Bp7QJ2/N07SKAi1Gm3O+LWQWeHbZpq+7nhJbr8zCHqJe/v5z+VKUhIGw==
+nextbone@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.11.0.tgz#da3b32ea8d19235ada7a7c7deb95c5b6a7cb56e8"
+  integrity sha512-veyYpclxHFSHVHDa+JtwiSXsEXNTUufDzW+clVzJM7Pz57/O8aR41PTXoPDi5ZeT3+C8jUYDj7o7tefdyaMenA==
   dependencies:
     underscore ">=1.8.3"
 
@@ -5626,10 +5626,10 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-popper.js@^1.14.6:
-  version "1.14.6"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.6.tgz#ab20dd4edf9288b8b3b6531c47c361107b60b4b0"
-  integrity sha512-AGwHGQBKumlk/MDfrSOf0JHhJCImdDMcGNoqKmKkU+68GFazv3CQ6q9r7Ja1sKDZmYWTckY/uLyEznheTDycnA==
+popper.js@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.15.0.tgz#5560b99bbad7647e9faa475c6b8056621f5a4ff2"
+  integrity sha512-w010cY1oCUmI+9KwwlWki+r5jxKfTFDVoadl7MSrIujHU5MJ5OR6HTDj6Xo8aoR/QsA56x8jKjA59qGH4ELtrA==
 
 portfinder@^1.0.9:
   version "1.0.13"

@@ -3,3 +3,6 @@ tools
 test
 src
 example
+.vscode
+jsconfig.json
+babel.config.js

@@ -1,13 +1,14 @@
 {
   "name": "nextbone-modals",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Modal service for Nextbone",
   "main": "dist/nextbone-modals.js",
   "module": "dist/nextbone-modals.js",
   "scripts": {
     "test": "jest",
     "build": "node tools/build",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

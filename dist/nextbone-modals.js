@@ -102,7 +102,7 @@ class Modals extends Events {
    */
 
 
-  alert(options) {
+  alert(options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('alert');
       let promise = this.open(view, options);
@@ -119,7 +119,7 @@ class Modals extends Events {
    */
 
 
-  confirm(options) {
+  confirm(options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('confirm');
       let promise = this.open(view, options);
@@ -141,7 +141,7 @@ class Modals extends Events {
    */
 
 
-  prompt(options) {
+  prompt(options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('prompt');
       let promise = this.open(view, options);
@@ -158,7 +158,7 @@ class Modals extends Events {
     });
   }
 
-  dialog(view, options) {
+  dialog(view, options = {}) {
     if (!view) {
       throw new Error('ModalService: no view option passed to dialog');
     }
@@ -336,7 +336,6 @@ class ConfirmView extends BaseModal {
 const layoutTemplate = `
 <div class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content"></div>
   </div>
 </div>
 `;
@@ -385,10 +384,41 @@ class BootstrapModals extends Modals {
       'shown.bs.modal': e => this.trigger('modal:show', e),
       'hidden.bs.modal': e => this.trigger('modal:hide', e)
     });
-    this.contentRegion = new Region($layout.find('.modal-content')[0]);
+    const $dialog = $layout.find('.modal-dialog');
+    this.contentRegion = new Region($dialog[0]);
+    this.on('before:open', (view, options) => {
+      const {
+        size,
+        scrollable,
+        centered
+      } = options;
+      let dialogClasses = '';
+
+      if (size) {
+        dialogClasses += ` modal-${size}`;
+      }
+
+      if (scrollable) {
+        dialogClasses += ` modal-dialog-scrollable`;
+      }
+
+      if (centered) {
+        dialogClasses += ` modal-dialog-centered`;
+      }
+
+      if (dialogClasses) {
+        $dialog.addClass(dialogClasses);
+      }
+
+      this.__dialogClasses = dialogClasses;
+    });
+    this.on('close', () => {
+      $dialog.removeClass(this.__dialogClasses);
+    });
   }
 
   render(view) {
+    view.classList.add('modal-content');
     this.contentRegion.show(view);
   }
 

@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import { last } from 'underscore'
 import { Region } from 'nextbone/dom-utils'
 import { Modals } from './service'
 import { AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap-views'
@@ -54,7 +55,16 @@ export class BootstrapModals extends Modals {
 
     $layout.on({
       'shown.bs.modal': (e) => this.trigger('modal:show', e),
-      'hidden.bs.modal': (e) => this.trigger('modal:hide', e)
+      'hidden.bs.modal': (e) => { 
+        // closed by bootstrap handler
+        if (this.isOpen()) {
+          // todo: get view from dom tree        
+          const view = last(this.views)
+          const cancel = this.getCancelHandler(view)
+          return cancel()
+        }
+        this.trigger('modal:hide', e)
+      }  
     })
 
     const $dialog = $layout.find('.modal-dialog')
@@ -102,7 +112,8 @@ export class BootstrapModals extends Modals {
   }
 
   animateOut () {
-    return new Promise(resolve => {
+    // if modal already hidden, i.e., closed by bootstrap handler, does nothing
+    if (this.$layout.hasClass('show')) return new Promise(resolve => {
       this.once('modal:hide', resolve)
       this.$layout.modal('hide')
     })

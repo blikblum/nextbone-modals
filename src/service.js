@@ -2,6 +2,8 @@ import { Events } from 'nextbone'
 import { defineAsyncMethods } from 'nextbone/service'
 import { last, without } from 'underscore'
 
+const cancelHandlerMap = new WeakMap()
+
 /**
  * @class Modals
  */
@@ -16,6 +18,10 @@ export class Modals extends Events {
 
   createElement (type) {
     return document.createElement(`nextbone-modal-${type}`)
+  }
+
+  getCancelHandler (view) {
+    return cancelHandlerMap.get(view)
   }
 
   /**
@@ -106,12 +112,16 @@ export class Modals extends Events {
 
       this.trigger('before:alert', view, options)
 
-      view.on('confirm cancel', () => {
+      let cancel = () => {
         promise
           .then(() => this.close(view, options))
           .then(() => this.trigger('alert', null, view, options))
           .then(() => resolve(), reject)
-      })
+      }
+
+      cancelHandlerMap.set(view, cancel)
+
+      view.on('confirm cancel', cancel)
     })
   }
 
@@ -134,9 +144,13 @@ export class Modals extends Events {
           .then(() => resolve(result), reject)
       }
 
+      let cancel = () => close(false)
+
+      cancelHandlerMap.set(view, cancel)
+
       view.on({
         confirm: () => close(true),
-        cancel: () => close(false)
+        cancel
       })
     })
   }
@@ -159,9 +173,13 @@ export class Modals extends Events {
           .then(() => resolve(result), reject)
       }
 
+      let cancel = () => close()
+
+      cancelHandlerMap.set(view, cancel)
+
       view.on({
         submit: text => close(text),
-        cancel: () => close()
+        cancel
       })
     })
   }
@@ -182,9 +200,13 @@ export class Modals extends Events {
           .then(() => resolve(result), reject)
       }
 
+      let cancel = () => close()
+
+      cancelHandlerMap.set(view, cancel)
+
       view.on({
         submit: data => close(data),
-        cancel: () => close()
+        cancel
       })
     })
   }

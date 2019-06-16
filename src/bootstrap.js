@@ -6,7 +6,6 @@ import { AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap
 const layoutTemplate = `
 <div class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content"></div>
   </div>
 </div>
 `
@@ -58,9 +57,9 @@ export class BootstrapModals extends Modals {
       'hidden.bs.modal': (e) => this.trigger('modal:hide', e)
     })
 
-    this.contentRegion = new Region($layout.find('.modal-content')[0])
-
     const $dialog = $layout.find('.modal-dialog')
+
+    this.contentRegion = new Region($dialog[0])
 
     this.on('before:open', (view, options) => {
       const {size, scrollable, centered} = options
@@ -87,6 +86,7 @@ export class BootstrapModals extends Modals {
   }
 
   render (view) {
+    view.classList.add('modal-content')
     this.contentRegion.show(view)
   }
 

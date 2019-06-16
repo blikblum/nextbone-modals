@@ -4,6 +4,7 @@ import { last, without } from 'underscore';
 import $ from 'jquery';
 import { Region } from 'nextbone/dom-utils';
 
+const cancelHandlerMap = new WeakMap();
 /**
  * @class Modals
  */
@@ -19,6 +20,10 @@ class Modals extends Events {
 
   createElement(type) {
     return document.createElement(`nextbone-modal-${type}`);
+  }
+
+  getCancelHandler(view) {
+    return cancelHandlerMap.get(view);
   }
   /**
    * @method open
@@ -107,9 +112,13 @@ class Modals extends Events {
       let view = this.createElement('alert');
       let promise = this.open(view, options);
       this.trigger('before:alert', view, options);
-      view.on('confirm cancel', () => {
+
+      let cancel = () => {
         promise.then(() => this.close(view, options)).then(() => this.trigger('alert', null, view, options)).then(() => resolve(), reject);
-      });
+      };
+
+      cancelHandlerMap.set(view, cancel);
+      view.on('confirm cancel', cancel);
     });
   }
   /**
@@ -129,9 +138,12 @@ class Modals extends Events {
         promise.then(() => this.close(view, options)).then(() => this.trigger('confirm', result, view, options)).then(() => resolve(result), reject);
       };
 
+      let cancel = () => close(false);
+
+      cancelHandlerMap.set(view, cancel);
       view.on({
         confirm: () => close(true),
-        cancel: () => close(false)
+        cancel
       });
     });
   }
@@ -151,9 +163,12 @@ class Modals extends Events {
         promise.then(() => this.close(view, options)).then(() => this.trigger('prompt', result, view, options)).then(() => resolve(result), reject);
       };
 
+      let cancel = () => close();
+
+      cancelHandlerMap.set(view, cancel);
       view.on({
         submit: text => close(text),
-        cancel: () => close()
+        cancel
       });
     });
   }
@@ -171,9 +186,12 @@ class Modals extends Events {
         promise.then(() => this.close(view, options)).then(() => this.trigger('dialog', result, view, options)).then(() => resolve(result), reject);
       };
 
+      let cancel = () => close();
+
+      cancelHandlerMap.set(view, cancel);
       view.on({
         submit: data => close(data),
-        cancel: () => close()
+        cancel
       });
     });
   }
@@ -237,12 +255,6 @@ class BaseModal extends HTMLElement {
     this.trigger('confirm');
   }
 
-  cancelClick(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    this.trigger('cancel');
-  }
-
   submit(e) {
     e.preventDefault();
     const val = this.querySelector('input').value;
@@ -257,8 +269,6 @@ class BaseModal extends HTMLElement {
   connectedCallback() {
     this.innerHTML = this.render(this.options);
     this.bindEvent('.btn-primary', 'click', this.confirmClick);
-    this.bindEvent('.close', 'click', this.cancelClick);
-    this.bindEvent('.btn-secondary', 'click', this.cancelClick);
     this.bindEvent('form', 'submit', this.submit);
   }
 
@@ -271,7 +281,7 @@ class AlertView extends BaseModal {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
-      <button type="button" class="close" aria-hidden="true">&times;</button>      
+      <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>      
     </div>
 
     <div class="modal-body">
@@ -292,7 +302,7 @@ class PromptView extends BaseModal {
     <form>
       <div class="modal-header">
         <h5 class="modal-title">${data.title}</h5>
-        <button type="button" class="close" aria-hidden="true">&times;</button>      
+        <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>      
       </div>
 
       <div class="modal-body">
@@ -303,7 +313,7 @@ class PromptView extends BaseModal {
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary">${data.cancel || defaultCaptions.cancel}</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">${data.cancel || defaultCaptions.cancel}</button>
         <button type="submit" class="btn btn-primary">${data.ok || defaultCaptions.ok}</button>
       </div>
     </form>
@@ -317,7 +327,7 @@ class ConfirmView extends BaseModal {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
-      <button type="button" class="close" aria-hidden="true">&times;</button>      
+      <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>      
     </div>
     
     <div class="modal-body">
@@ -325,7 +335,7 @@ class ConfirmView extends BaseModal {
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary">${data.no || defaultCaptions.no}</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">${data.no || defaultCaptions.no}</button>
       <button type="button" class="btn btn-primary">${data.yes || defaultCaptions.yes}</button>
     </div>      
     `;
@@ -382,7 +392,17 @@ class BootstrapModals extends Modals {
     });
     $layout.on({
       'shown.bs.modal': e => this.trigger('modal:show', e),
-      'hidden.bs.modal': e => this.trigger('modal:hide', e)
+      'hidden.bs.modal': e => {
+        // closed by bootstrap handler
+        if (this.isOpen()) {
+          // todo: get view from dom tree        
+          const view = last(this.views);
+          const cancel = this.getCancelHandler(view);
+          return cancel();
+        }
+
+        this.trigger('modal:hide', e);
+      }
     });
     const $dialog = $layout.find('.modal-dialog');
     this.contentRegion = new Region($dialog[0]);
@@ -434,7 +454,8 @@ class BootstrapModals extends Modals {
   }
 
   animateOut() {
-    return new Promise(resolve => {
+    // if modal already hidden, i.e., closed by bootstrap handler, does nothing
+    if (this.$layout.hasClass('show')) return new Promise(resolve => {
       this.once('modal:hide', resolve);
       this.$layout.modal('hide');
     });

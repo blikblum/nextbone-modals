@@ -1,11 +1,11 @@
-var path = require('path')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var MiniCSSExtractPlugin = require('mini-css-extract-plugin')
-var CleanPlugin = require('clean-webpack-plugin')
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-var DIST_DIR = 'dist'
-var devDevTool = 'source-map' // see https://webpack.js.org/configuration/devtool/ for options
-var prodDevTool = false
+const DIST_DIR = 'dist'
+const devDevTool = 'source-map' // see https://webpack.js.org/configuration/devtool/ for options
+const prodDevTool = false
 
 var envPresetConfig = {
   modules: false,
@@ -32,7 +32,7 @@ var plugins = [
 module.exports = function (env) {
   var isProd = env && env.production
 
-  if (isProd) plugins.push(new CleanPlugin([DIST_DIR + '/*.*']))
+  if (isProd) plugins.push(new CleanWebpackPlugin())
 
   return {
     entry: './src/main.js',

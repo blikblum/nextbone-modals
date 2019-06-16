@@ -9,7 +9,25 @@ modals.setup({
   container: '#main-modal-container'
 })
 
+function stringifyArgs(args) {
+  return args.map(item => {
+    if (item instanceof HTMLElement) {
+      return `Element(${item.tagName})`
+    } else if (item instanceof $.Event) {
+      return `Event(${item.type})`
+    } else {
+      return JSON.stringify(item)
+    }
+  })
+}
+
 class ModalsExample extends HTMLElement {
+  constructor () {
+    super()
+    modals.on('all', (name, ...args) => {
+      $(this).find('#events').append(`${name} ${stringifyArgs(args)} <br/>`)
+    })
+  }
   connectedCallback () {
     this.innerHTML = `
     <div class="container">
@@ -70,7 +88,11 @@ class ModalsExample extends HTMLElement {
         <div class="col">
           <h5>Log</h5>
           <div id="log"></div>
-        </div>        
+        </div>
+        <div class="col-md-9">
+          <h5>Events</h5>
+          <div id="events"></div>
+        </div>   
       </div>
     </div>
   `

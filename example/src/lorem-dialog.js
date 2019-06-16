@@ -40,16 +40,11 @@ Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, ve
 
 @view
 class LoremDialog extends HTMLElement {
-  @event('click', 'button.btn-secondary')
-  cancel() {
-    this.trigger('cancel')
-  }
 
   @event('click', 'button.btn-primary')
   submit() {
     this.trigger('submit', true)
   }
-
 
   connectedCallback() {
     this.innerHTML = `

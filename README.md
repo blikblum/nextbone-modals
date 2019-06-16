@@ -2,6 +2,8 @@
 
 Simple modal service for Nextbone.
 
+See [live example](https://blikblum.github.io/nextbone-modals/example/dist/) with Bootstrap
+
 ## Usage
 
 ### Modals

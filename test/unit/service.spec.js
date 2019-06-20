@@ -272,20 +272,22 @@ describe('Modals', function () {
     })
 
     it('should open the alert modal and resolve on confirm', function () {
+      const options = {}
       modalService.on('open', () => alertView.trigger('confirm'))
 
-      return modalService.alert().then(() => {
-        expect(openSpy).toHaveBeenCalledWith(alertView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(alertView, undefined)
+      return modalService.alert(options).then(() => {
+        expect(openSpy).toHaveBeenCalledWith(alertView, options)
+        expect(closeSpy).toHaveBeenCalledWith(alertView, options)
       })
     })
 
     it('should open the alert modal and close on cancel', function () {
+      const options = {}
       modalService.on('open', () => alertView.trigger('cancel'))
 
-      return modalService.alert().then(() => {
-        expect(openSpy).toHaveBeenCalledWith(alertView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(alertView, undefined)
+      return modalService.alert(options).then(() => {
+        expect(openSpy).toHaveBeenCalledWith(alertView, options)
+        expect(closeSpy).toHaveBeenCalledWith(alertView, options)
       })
     })
 
@@ -334,26 +336,28 @@ describe('Modals', function () {
     })
 
     it('should open the confirm modal and resolve with true on confirm', function () {
-      let confirm = modalService.confirm()
+      const options = {}
+      let confirm = modalService.confirm(options)
 
       Promise.resolve().then(() => confirmView.trigger('confirm'))
 
       return confirm.then(result => {
         expect(result).toBe(true)
-        expect(openSpy).toHaveBeenCalledWith(confirmView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(confirmView, undefined)
+        expect(openSpy).toHaveBeenCalledWith(confirmView, options)
+        expect(closeSpy).toHaveBeenCalledWith(confirmView, options)
       })
     })
 
     it('should open the confirm modal and close with false on cancel', function () {
-      let confirm = modalService.confirm()
+      const options = {}
+      let confirm = modalService.confirm(options)
 
       Promise.resolve().then(() => confirmView.trigger('cancel'))
 
       return confirm.then(result => {
         expect(result).toBe(false)
-        expect(openSpy).toHaveBeenCalledWith(confirmView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(confirmView, undefined)
+        expect(openSpy).toHaveBeenCalledWith(confirmView, options)
+        expect(closeSpy).toHaveBeenCalledWith(confirmView, options)
       })
     })
 
@@ -402,22 +406,24 @@ describe('Modals', function () {
     })
 
     it('should open the prompt modal and resolve with string on submit', function () {
+      const options = {}
       modalService.on('open', () => promptView.trigger('submit', 'myString'))
 
-      return modalService.prompt().then(result => {
+      return modalService.prompt(options).then(result => {
         expect(result).toBe('myString')
-        expect(openSpy).toHaveBeenCalledWith(promptView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(promptView, undefined)
+        expect(openSpy).toHaveBeenCalledWith(promptView, options)
+        expect(closeSpy).toHaveBeenCalledWith(promptView, options)
       })
     })
 
     it('should open the prompt modal and close with undefined on cancel', function () {
+      const options = {}
       modalService.on('open', () => promptView.trigger('cancel', 'devilsAdvocateString'))
 
-      return modalService.prompt().then(result => {
+      return modalService.prompt(options).then(result => {
         expect(result).toBeUndefined()
-        expect(openSpy).toHaveBeenCalledWith(promptView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(promptView, undefined)
+        expect(openSpy).toHaveBeenCalledWith(promptView, options)
+        expect(closeSpy).toHaveBeenCalledWith(promptView, options)
       })
     })
 
@@ -462,22 +468,24 @@ describe('Modals', function () {
 
     it('should open the dialog modal and resolve with arbitrary data on submit', function () {
       const data = { key: 'value' }
+      const options = {}
       modalService.on('open', () => dialogView.trigger('submit', data))
 
-      return modalService.dialog(dialogView).then(result => {
+      return modalService.dialog(dialogView, options).then(result => {
         expect(result).toBe(data)
-        expect(openSpy).toHaveBeenCalledWith(dialogView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(dialogView, undefined)
+        expect(openSpy).toHaveBeenCalledWith(dialogView, options)
+        expect(closeSpy).toHaveBeenCalledWith(dialogView, options)
       })
     })
 
     it('should open the dialog modal and close with undefined on cancel', function () {
+      const options = {}
       modalService.on('open', () => dialogView.trigger('cancel', 'devilsAdvocateString'))
 
-      return modalService.dialog(dialogView).then(result => {
+      return modalService.dialog(dialogView, options).then(result => {
         expect(result).toBeUndefined()
-        expect(openSpy).toHaveBeenCalledWith(dialogView, undefined)
-        expect(closeSpy).toHaveBeenCalledWith(dialogView, undefined)
+        expect(openSpy).toHaveBeenCalledWith(dialogView, options)
+        expect(closeSpy).toHaveBeenCalledWith(dialogView, options)
       })
     })
 

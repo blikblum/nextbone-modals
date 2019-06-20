@@ -3578,10 +3578,10 @@ neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-nextbone@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.11.0.tgz#da3b32ea8d19235ada7a7c7deb95c5b6a7cb56e8"
-  integrity sha512-veyYpclxHFSHVHDa+JtwiSXsEXNTUufDzW+clVzJM7Pz57/O8aR41PTXoPDi5ZeT3+C8jUYDj7o7tefdyaMenA==
+nextbone@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/nextbone/-/nextbone-0.12.0.tgz#9d579261f3281b4bf3b9d860cd5836d538c36198"
+  integrity sha512-1oNS/sNheuyDhK2I2DiEoa2qSrHEVlvRwWSyy16oxiD10h4YpYC+wGcpI8uZNjbo01yZDLtR+PZ6hjbDDB9n9w==
   dependencies:
     underscore ">=1.8.3"
 

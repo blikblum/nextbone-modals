@@ -33,7 +33,7 @@
     "del": "^4.1.1",
     "jest": "^24.8.0",
     "jquery": "^3.4.1",
-    "nextbone": "^0.11.0",
+    "nextbone": "^0.12.0",
     "rollup": "^1.12.2",
     "rollup-plugin-babel": "^4.3.2",
     "standard": "^12.0.1",
@@ -41,7 +41,7 @@
   },
   "peerDependencies": {
     "jquery": "^3.3.1",
-    "nextbone": "^0.11.0",
+    "nextbone": "^0.12.0",
     "underscore": "^1.9.1"
   },
   "dependencies": {},

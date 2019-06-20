@@ -1,5 +1,5 @@
 import { Events } from 'nextbone'
-import { defineAsyncMethods } from 'nextbone/service'
+import { defineAsyncMethods } from 'nextbone/class-utils'
 import { last, without } from 'underscore'
 
 const cancelHandlerMap = new WeakMap()

@@ -6,7 +6,59 @@ See [live example](https://blikblum.github.io/nextbone-modals/example/dist/) wit
 
 ## Usage
 
-### Modals
+### Bootstrap
+
+```js
+import { BootstrapModals } from 'nextbone-modals';
+
+// optional. Configure default button captions
+BootstrapModals.setCaptions({
+  ok: 'OK',
+  cancel: 'Cancel',
+  yes: 'Yes',
+  no: 'No'
+});
+
+const modalService = new BootstrapModals();
+
+modalService.setup({
+  container: '#modal-container'
+});
+
+modalService.alert({
+  title: 'Here is a alert modal!',
+  text: 'Here is some text to demo that you can pass anything to your view'
+}).then(() => {
+  console.log('Yay! The alert has been closed!');
+});
+
+modalService.confirm({
+  title: 'Here is a confirm modal!',
+  text: 'Here is some text to demo that you can pass anything to your view'
+}).then(confirmed => {
+  if (confirmed) {
+    console.log('Yay! The user confirmed!');
+  } else {
+    console.log('Boo! The user cancelled!');
+  }
+});
+
+modalService.prompt({
+  title: 'Here is a prompt modal!',
+  text: 'Here is some text to demo that you can pass anything to your view'
+}).then(response => {
+  if (response) {
+    console.log('Yay! The user wrote a response!');
+  } else {
+    console.log('Boo! The user cancelled!');
+  }
+});
+
+// see a full example ar ./example
+
+```
+
+### Custom implementation
 
 ```js
 import $ from 'jquery'
@@ -15,9 +67,9 @@ import AlertView from './views/alert';
 import ConfirmView from './views/confirm';
 import PromptView from './views/prompt';
 
-customElements.define('nextbone-modal-alert', AlertView)
-customElements.define('nextbone-modal-confirm', ConfirmView)
-customElements.define('nextbone-modal-prompt', PromptView)
+customElements.define('nextbone-modal-alert', AlertView);
+customElements.define('nextbone-modal-confirm', ConfirmView);
+customElements.define('nextbone-modal-prompt', PromptView);
 
 class MyModalService extends Modals {
   initialize() {
@@ -54,68 +106,11 @@ class MyModalService extends Modals {
 
 const modalService = new ModalService();
 
-modalService.request('alert', {
-  title: 'Here is a alert modal!',
-  text: 'Here is some text to demo that you can pass anything to your view'
-}).then(() => {
-  console.log('Yay! The alert has been closed!');
-});
-
-modalService.request('confirm', {
-  title: 'Here is a confirm modal!',
-  text: 'Here is some text to demo that you can pass anything to your view'
-}).then(confirmed => {
-  if (confirmed) {
-    console.log('Yay! The user confirmed!');
-  } else {
-    console.log('Boo! The user cancelled!');
-  }
-});
-
-modalService.request('prompt', {
-  title: 'Here is a prompt modal!',
-  text: 'Here is some text to demo that you can pass anything to your view'
-}).then(response => {
-  if (response) {
-    console.log('Yay! The user wrote a response!');
-  } else {
-    console.log('Boo! The user cancelled!');
-  }
-});
-
-modalService.request('open', myCustomView).then(() => {
-  console.log('Yay! The modal has been opened.');
-});
-
-modalService.request('close', myCustomView).then(() => {
-  console.log('Yay! The modal has been closed.');
-});
-
-modalService.request('close').then(() => {
-  console.log('Yay! ALL OF THE MODALS have been closed.');
-});
-```
-
-### BootstrapModals
-
-A preconfigured service to work with Bootstrap modals
-
-```js
-import { BootstrapModals } from 'nextbone-service';
-
-const modalService = new BootstrapModals();
-
-modalService.setup({
-  container: '#modal-container'
-})
-
-// same usage as vanilla
-
-// see a full example ar ./example
+// same usage as bootstrap
 ```
 
 
-## Contibuting
+## Contributing
 
 ### Getting Started
 

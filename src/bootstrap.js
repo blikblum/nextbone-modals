@@ -17,9 +17,15 @@ const elementClasses = {
   confirm: ConfirmView
 }
 
+const defaultOptions = {}
+
 export class BootstrapModals extends Modals {
   static setCaptions (captions = {}) {
     Object.assign(defaultCaptions, captions)
+  }
+
+  static setOptions (options = {}) {
+    Object.assign(defaultOptions, options)
   }
 
   setup (options = {}) {
@@ -72,7 +78,7 @@ export class BootstrapModals extends Modals {
     this.contentRegion = new Region($dialog[0])
 
     this.on('before:open', (view, options) => {
-      const {size, scrollable, centered} = options
+      const {size, scrollable, centered, customClass} = Object.assign({}, defaultOptions, options)
       let dialogClasses = ''
       if (size) {
         dialogClasses += ` modal-${size}`
@@ -82,6 +88,9 @@ export class BootstrapModals extends Modals {
       }
       if (centered) {
         dialogClasses += ` modal-dialog-centered`
+      }
+      if (customClass) {
+        dialogClasses += ` ${customClass}`
       }
 
       if (dialogClasses) {

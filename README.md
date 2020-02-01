@@ -19,6 +19,12 @@ BootstrapModals.setCaptions({
   no: 'No'
 });
 
+// optional. Configure default options
+BootstrapModals.setOptions({
+  centered: true,
+  customClass: 'my-modal-class'
+});
+
 const modalService = new BootstrapModals();
 
 modalService.setup({

@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { last } from 'underscore'
+import { last } from 'lodash-es'
 import { Region } from 'nextbone/dom-utils'
 import { Modals } from './service'
 import { AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap-views'

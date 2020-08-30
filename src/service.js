@@ -1,6 +1,6 @@
 import { Events } from 'nextbone'
 import { defineAsyncMethods } from 'nextbone/class-utils'
-import { last, without } from 'underscore'
+import { last, without } from 'lodash-es'
 
 const cancelHandlerMap = new WeakMap()
 

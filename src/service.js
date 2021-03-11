@@ -11,16 +11,16 @@ export class Modals extends Events {
   /**
    * @constructs Modals
    */
-  constructor (channelName) {
+  constructor(channelName) {
     super(channelName)
     this.views = []
   }
 
-  createElement (type) {
+  createElement(type) {
     return document.createElement(`nextbone-modal-${type}`)
   }
 
-  getCancelHandler (view) {
+  getCancelHandler(view) {
     return cancelHandlerMap.get(view)
   }
 
@@ -29,26 +29,29 @@ export class Modals extends Events {
    * @param {HTMLElement} [view]
    * @returns {Promise}
    */
-  open (view, options) {
+  open(view, options) {
     let previousView
     view.options = options
-    return Promise.resolve().then(() => {
-      this.trigger('before:open', view, options)
-      this._isOpen = true
+    return Promise.resolve()
+      .then(() => {
+        this.trigger('before:open', view, options)
+        this._isOpen = true
 
-      previousView = last(this.views)
-      this.views.push(view)
+        previousView = last(this.views)
+        this.views.push(view)
 
-      return this.render(view, options)
-    }).then(() => {
-      if (previousView) {
-        return this.animateSwap(previousView, view, options)
-      } else {
-        return this.animateIn(view, options)
-      }
-    }).then(() => {
-      this.trigger('open', view, options)
-    })
+        return this.render(view, options)
+      })
+      .then(() => {
+        if (previousView) {
+          return this.animateSwap(previousView, view, options)
+        } else {
+          return this.animateIn(view, options)
+        }
+      })
+      .then(() => {
+        this.trigger('open', view, options)
+      })
   }
 
   /**
@@ -56,48 +59,51 @@ export class Modals extends Events {
    * @param {HTMLElement} [view]
    * @returns {Promise}
    */
-  close (view, options) {
+  close(view, options) {
     let previousView
     let views
 
-    return Promise.resolve().then(() => {
-      if (view) {
-        this.trigger('before:close', view, options)
-      } else {
-        this.views.map(view => this.trigger('before:close', view, options))
-      }
+    return Promise.resolve()
+      .then(() => {
+        if (view) {
+          this.trigger('before:close', view, options)
+        } else {
+          this.views.map((view) => this.trigger('before:close', view, options))
+        }
 
-      this._isOpen = false
+        this._isOpen = false
 
-      if (view) {
-        views = this.views = without(this.views, view)
-      } else {
-        views = this.views
-        this.views = []
-      }
+        if (view) {
+          views = this.views = without(this.views, view)
+        } else {
+          views = this.views
+          this.views = []
+        }
 
-      previousView = last(views)
+        previousView = last(views)
 
-      if (view && previousView) {
-        return this.animateSwap(view, previousView, options)
-      } else if (view) {
-        return this.animateOut(view, options)
-      } else if (previousView) {
-        return this.animateOut(previousView, options)
-      }
-    }).then(() => {
-      if (view) {
-        return this.remove(view, options)
-      } else {
-        return Promise.all(views.map(view => this.remove(view, options)))
-      }
-    }).then(() => {
-      if (view) {
-        this.trigger('close', view, options)
-      } else {
-        views.map(view => this.trigger('close', view, options))
-      }
-    })
+        if (view && previousView) {
+          return this.animateSwap(view, previousView, options)
+        } else if (view) {
+          return this.animateOut(view, options)
+        } else if (previousView) {
+          return this.animateOut(previousView, options)
+        }
+      })
+      .then(() => {
+        if (view) {
+          return this.remove(view, options)
+        } else {
+          return Promise.all(views.map((view) => this.remove(view, options)))
+        }
+      })
+      .then(() => {
+        if (view) {
+          this.trigger('close', view, options)
+        } else {
+          views.map((view) => this.trigger('close', view, options))
+        }
+      })
   }
 
   /**
@@ -105,7 +111,7 @@ export class Modals extends Events {
    * @param {Object} [options]
    * @returns {Promise}
    */
-  alert (options = {}) {
+  alert(options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('alert')
       let promise = this.open(view, options)
@@ -130,14 +136,14 @@ export class Modals extends Events {
    * @param {Object} [options]
    * @returns {Promise}
    */
-  confirm (options = {}) {
+  confirm(options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('confirm')
       let promise = this.open(view, options)
 
       this.trigger('before:confirm', view, options)
 
-      let close = result => {
+      let close = (result) => {
         promise
           .then(() => this.close(view, options))
           .then(() => this.trigger('confirm', result, view, options))
@@ -150,7 +156,7 @@ export class Modals extends Events {
 
       view.on({
         confirm: () => close(true),
-        cancel
+        cancel,
       })
     })
   }
@@ -159,14 +165,14 @@ export class Modals extends Events {
    * @method prompt
    * @returns {Promise}
    */
-  prompt (options = {}) {
+  prompt(options = {}) {
     return new Promise((resolve, reject) => {
       let view = this.createElement('prompt')
       let promise = this.open(view, options)
 
       this.trigger('before:prompt', view, options)
 
-      let close = result => {
+      let close = (result) => {
         promise
           .then(() => this.close(view, options))
           .then(() => this.trigger('prompt', result, view, options))
@@ -178,13 +184,13 @@ export class Modals extends Events {
       cancelHandlerMap.set(view, cancel)
 
       view.on({
-        submit: text => close(text),
-        cancel
+        submit: (text) => close(text),
+        cancel,
       })
     })
   }
 
-  dialog (view, options = {}) {
+  dialog(view, options = {}) {
     if (!view) {
       throw new Error('ModalService: no view option passed to dialog')
     }
@@ -193,7 +199,7 @@ export class Modals extends Events {
 
       this.trigger('before:dialog', view, options)
 
-      let close = result => {
+      let close = (result) => {
         promise
           .then(() => this.close(view, options))
           .then(() => this.trigger('dialog', result, view, options))
@@ -205,8 +211,8 @@ export class Modals extends Events {
       cancelHandlerMap.set(view, cancel)
 
       view.on({
-        submit: data => close(data),
-        cancel
+        submit: (data) => close(data),
+        cancel,
       })
     })
   }
@@ -215,7 +221,7 @@ export class Modals extends Events {
    * @method isOpen
    * @returns {Boolean}
    */
-  isOpen () {
+  isOpen() {
     return !!this._isOpen
   }
 
@@ -223,32 +229,31 @@ export class Modals extends Events {
    * @abstract
    * @method render
    */
-  render () {}
+  render() {}
 
   /**
    * @abstract
    * @method remove
    */
-  remove () {}
+  remove() {}
 
   /**
    * @abstract
    * @method animateIn
    */
-  animateIn () {}
+  animateIn() {}
 
   /**
    * @abstract
    * @method animateSwap
    */
-  animateSwap () {}
+  animateSwap() {}
 
   /**
    * @abstract
    * @method animateOut
    */
-  animateOut () {}
+  animateOut() {}
 }
-
 
 defineAsyncMethods(Modals, ['open', 'close', 'confirm', 'prompt', 'dialog'])

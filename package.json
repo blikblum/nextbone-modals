@@ -8,6 +8,7 @@
     "test": "jest",
     "build": "node tools/build",
     "coverage": "jest --coverage",
+    "format": "prettier src/**/*.js --write",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -16,9 +17,10 @@
   },
   "keywords": [
     "modal",
-    "marionette",
+    "nextbone",
     "bootstrap",
-    "backbone"
+    "backbone",
+    "web-component"
   ],
   "author": "Luiz Américo Pereira Câmara",
   "license": "MIT",
@@ -35,9 +37,9 @@
     "jquery": "^3.5.1",
     "lodash-es": "^4.17.15",
     "nextbone": "^0.20.0",
+    "prettier": "^2.2.1",
     "rollup": "^2.26.8",
-    "rollup-plugin-babel": "^4.4.0",
-    "standard": "^14.3.4"
+    "rollup-plugin-babel": "^4.4.0"
   },
   "peerDependencies": {
     "jquery": "^3.4.1",

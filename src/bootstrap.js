@@ -14,25 +14,25 @@ const layoutTemplate = `
 const elementClasses = {
   alert: AlertView,
   prompt: PromptView,
-  confirm: ConfirmView
+  confirm: ConfirmView,
 }
 
 const defaultOptions = {}
 
 export class BootstrapModals extends Modals {
-  static setCaptions (captions = {}) {
+  static setCaptions(captions = {}) {
     Object.assign(defaultCaptions, captions)
   }
 
-  static setOptions (options = {}) {
+  static setOptions(options = {}) {
     Object.assign(defaultOptions, options)
   }
 
-  setup (options = {}) {
+  setup(options = {}) {
     this.container = options.container
   }
 
-  createElement (type) {
+  createElement(type) {
     const name = `bootstrap-modal-${type}`
     if (!customElements.get(name)) {
       customElements.define(name, elementClasses[type])
@@ -40,7 +40,7 @@ export class BootstrapModals extends Modals {
     return document.createElement(name)
   }
 
-  start () {
+  start() {
     if (!this.container) {
       throw new Error('Bootstrap Modals: container option is not defined')
     }
@@ -52,25 +52,25 @@ export class BootstrapModals extends Modals {
 
     $container.html(layoutTemplate)
 
-    const $layout = this.$layout = $container.children().eq(0)
+    const $layout = (this.$layout = $container.children().eq(0))
 
     $layout.modal({
       show: false,
-      backdrop: 'static'
+      backdrop: 'static',
     })
 
     $layout.on({
       'shown.bs.modal': (e) => this.trigger('modal:show', e),
-      'hidden.bs.modal': (e) => { 
+      'hidden.bs.modal': (e) => {
         // closed by bootstrap handler
         if (this.isOpen()) {
-          // todo: get view from dom tree        
+          // todo: get view from dom tree
           const view = last(this.views)
           const cancel = this.getCancelHandler(view)
           return cancel()
         }
         this.trigger('modal:hide', e)
-      }  
+      },
     })
 
     const $dialog = $layout.find('.modal-dialog')
@@ -78,7 +78,7 @@ export class BootstrapModals extends Modals {
     this.contentRegion = new Region($dialog[0])
 
     this.on('before:open', (view, options) => {
-      const {size, scrollable, centered, customClass} = Object.assign({}, defaultOptions, options)
+      const { size, scrollable, centered, customClass } = Object.assign({}, defaultOptions, options)
       let dialogClasses = ''
       if (size) {
         dialogClasses += ` modal-${size}`
@@ -104,27 +104,28 @@ export class BootstrapModals extends Modals {
     })
   }
 
-  render (view) {
+  render(view) {
     view.classList.add('modal-content')
     this.contentRegion.show(view)
   }
 
-  remove () {
+  remove() {
     this.contentRegion.empty()
   }
 
-  animateIn () {
-    return new Promise(resolve => {
+  animateIn() {
+    return new Promise((resolve) => {
       this.once('modal:show', resolve)
       this.$layout.modal('show')
     })
   }
 
-  animateOut () {
+  animateOut() {
     // if modal already hidden, i.e., closed by bootstrap handler, does nothing
-    if (this.$layout.hasClass('show')) return new Promise(resolve => {
-      this.once('modal:hide', resolve)
-      this.$layout.modal('hide')
-    })
+    if (this.$layout.hasClass('show'))
+      return new Promise((resolve) => {
+        this.once('modal:hide', resolve)
+        this.$layout.modal('hide')
+      })
   }
 }

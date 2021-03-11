@@ -4,28 +4,28 @@ const defaultCaptions = {
   ok: 'OK',
   cancel: 'Cancel',
   yes: 'Yes',
-  no: 'No'
+  no: 'No',
 }
 
 class BaseModal extends HTMLElement {
-  confirmClick () {
+  confirmClick() {
     this.trigger('confirm')
   }
 
-  submit (e) {
+  submit(e) {
     e.preventDefault()
     const val = this.querySelector('input').value
     this.trigger('submit', val)
   }
 
-  bindEvent (selector, event, listener) {
+  bindEvent(selector, event, listener) {
     const el = this.querySelector(selector)
     if (el) el.addEventListener(event, listener.bind(this))
   }
 
-  connectedCallback () {
+  connectedCallback() {
     this.innerHTML = this.render(this.options)
-    this.bindEvent('.btn-primary', 'click', this.confirmClick)        
+    this.bindEvent('.btn-primary', 'click', this.confirmClick)
     this.bindEvent('form', 'submit', this.submit)
   }
 }
@@ -33,7 +33,7 @@ class BaseModal extends HTMLElement {
 Events.extend(BaseModal.prototype)
 
 class AlertView extends BaseModal {
-  render (data) {
+  render(data) {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
@@ -59,13 +59,13 @@ class PromptView extends BaseModal {
       const okButton = this.querySelector('button.btn-primary')
       const input = this.querySelector('#modal__input--prompt')
       okButton.toggleAttribute('disabled', !when(input.value))
-      input.addEventListener('input', () => {        
-        okButton.toggleAttribute('disabled', !when(input.value))                        
-      })      
+      input.addEventListener('input', () => {
+        okButton.toggleAttribute('disabled', !when(input.value))
+      })
     }
-  }  
+  }
 
-  render (data) {
+  render(data) {
     return `
     <form>
       <div class="modal-header">
@@ -76,12 +76,16 @@ class PromptView extends BaseModal {
       <div class="modal-body">
         <div class="form-group">
           <label for="modal__input--prompt">${data.text}</label>
-          <input id="modal__input--prompt" class="form-control" type="text" value="${data.value || ''}">
+          <input id="modal__input--prompt" class="form-control" type="text" value="${
+            data.value || ''
+          }">
         </div>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">${data.cancel || defaultCaptions.cancel}</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">${
+          data.cancel || defaultCaptions.cancel
+        }</button>
         <button type="submit" class="btn btn-primary">${data.ok || defaultCaptions.ok}</button>
       </div>
     </form>
@@ -90,7 +94,7 @@ class PromptView extends BaseModal {
 }
 
 class ConfirmView extends BaseModal {
-  render (data) {
+  render(data) {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
@@ -102,7 +106,9 @@ class ConfirmView extends BaseModal {
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">${data.no || defaultCaptions.no}</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">${
+        data.no || defaultCaptions.no
+      }</button>
       <button type="button" class="btn btn-primary">${data.yes || defaultCaptions.yes}</button>
     </div>      
     `

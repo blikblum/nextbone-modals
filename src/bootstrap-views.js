@@ -52,6 +52,19 @@ class AlertView extends BaseModal {
 }
 
 class PromptView extends BaseModal {
+  connectedCallback() {
+    super.connectedCallback()
+    const { when } = this.options
+    if (typeof when === 'function') {
+      const okButton = this.querySelector('button.btn-primary')
+      const input = this.querySelector('#modal__input--prompt')
+      okButton.toggleAttribute('disabled', !when(input.value))
+      input.addEventListener('input', () => {        
+        okButton.toggleAttribute('disabled', !when(input.value))                        
+      })      
+    }
+  }  
+
   render (data) {
     return `
     <form>

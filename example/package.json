@@ -14,7 +14,7 @@
     "nextbone": "^0.11.0",
     "nextbone-modals": "^0.11.1",
     "popper.js": "^1.15.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

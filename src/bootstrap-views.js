@@ -12,9 +12,13 @@ class BaseModal extends HTMLElement {
     this.trigger('confirm')
   }
 
+  getInputValue() {
+    return this.querySelector('input').value
+  }
+
   submit(e) {
     e.preventDefault()
-    const val = this.querySelector('input').value
+    const val = this.getInputValue()
     this.trigger('submit', val)
   }
 
@@ -65,6 +69,43 @@ class PromptView extends BaseModal {
     }
   }
 
+  getInputValue() {
+    const { input } = this.options
+    switch (input) {
+      case 'radiogroup':
+        const checked = this.querySelector('input:checked')
+        return checked ? checked.value : undefined
+
+      default:
+        return super.getInputValue()
+    }
+  }
+
+  renderInput({ input, type = 'text', value, items = [], text }) {
+    switch (input) {
+      case 'radiogroup':
+        return `${items
+          .map(
+            (item, index) => `<div class="form-check">
+        <input class="form-check-input" type="radio" name="prompt" id="radio-item-${index}" value="${
+              item.value
+            }" ${value === item.value ? 'checked' : ''}>
+        <label class="form-check-label" for="radio-item-${index}">
+          ${item.name || ''}
+        </label>
+      </div>`
+          )
+          .join('')}`
+
+      default:
+        return `
+        <label for="modal__input--prompt">${text}</label>
+        <input id="modal__input--prompt" class="form-control" type="${type}" value="${
+          value || ''
+        }">`
+    }
+  }
+
   render(data) {
     return `
     <form>
@@ -74,11 +115,8 @@ class PromptView extends BaseModal {
       </div>
 
       <div class="modal-body">
-        <div class="form-group">
-          <label for="modal__input--prompt">${data.text}</label>
-          <input id="modal__input--prompt" class="form-control" type="text" value="${
-            data.value || ''
-          }">
+        <div class="form-group">          
+          ${this.renderInput(data)}
         </div>
       </div>
 

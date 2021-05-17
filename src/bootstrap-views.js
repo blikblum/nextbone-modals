@@ -84,7 +84,8 @@ class PromptView extends BaseModal {
   renderInput({ input, type = 'text', value, items = [], text }) {
     switch (input) {
       case 'radiogroup':
-        return `${items
+        return `<label>${text}</label>
+        ${items
           .map(
             (item, index) => `<div class="form-check">
         <input class="form-check-input" type="radio" name="prompt" id="radio-item-${index}" value="${

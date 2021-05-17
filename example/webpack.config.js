@@ -10,10 +10,8 @@ const prodDevTool = false
 var envPresetConfig = {
   modules: false,
   targets: {
-    browsers: [
-      'chrome 60'
-    ]
-  }
+    browsers: ['chrome 60'],
+  },
 }
 
 var plugins = [
@@ -21,12 +19,12 @@ var plugins = [
     // Options similar to the same options in webpackOptions.output
     // both options are optional
     filename: '[name].css',
-    chunkFilename: '[id].css'
+    chunkFilename: '[id].css',
   }),
 
   new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, 'src/index.html')
-  })
+    template: path.resolve(__dirname, 'src/index.html'),
+  }),
 ]
 
 module.exports = function (env) {
@@ -38,57 +36,65 @@ module.exports = function (env) {
     entry: './src/main.js',
     output: {
       filename: 'bundle.js',
-      path: path.resolve(__dirname, DIST_DIR)
+      path: path.resolve(__dirname, DIST_DIR),
     },
     module: {
-      rules: [{
-        test: /\.js$/,
-        include: [path.resolve('src')],
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: [['@babel/preset-env', envPresetConfig]],
-            plugins: [
-              [
-                '@babel/plugin-proposal-decorators',
-                {
-                  'legacy': false,
-                  'decoratorsBeforeExport': false
-                }
-              ]
-            ]
-          }
-        }]
-      }, {
-        test: /\.css$/,
-        use: [
-          MiniCSSExtractPlugin.loader,
-          'css-loader'
-        ]
-      }, {
-        test: /\.(sass|scss)$/,
-        use: [MiniCSSExtractPlugin.loader, 'css-loader', 'sass-loader']
-      }, {
-        test: /\.(woff|woff2)$/,
-        use: 'url-loader?limit=10000&mimetype=application/font-woff'
-      }, {
-        test: /\.ttf$/,
-        use: 'url-loader?limit=10000&mimetype=application/octet-stream'
-      }, {
-        test: /\.eot$/,
-        use: 'file-loader'
-      }, {
-        test: /\.svg$/,
-        use: 'url-loader?limit=10000&mimetype=image/svg+xml'
-      }, {
-        test: /^bootstrap\.js$/,
-        use: 'imports-loader?jQuery=jquery,$=jquery,Popper=popper.js,this=>window'
-      }]
+      rules: [
+        {
+          test: /\.js$/,
+          include: [path.resolve('src')],
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                presets: [['@babel/preset-env', envPresetConfig]],
+                plugins: [
+                  [
+                    '@babel/plugin-proposal-decorators',
+                    {
+                      legacy: false,
+                      decoratorsBeforeExport: false,
+                    },
+                  ],
+                ],
+              },
+            },
+          ],
+        },
+        {
+          test: /\.css$/,
+          use: [MiniCSSExtractPlugin.loader, 'css-loader'],
+        },
+        {
+          test: /\.(sass|scss)$/,
+          use: [MiniCSSExtractPlugin.loader, 'css-loader'],
+        },
+        {
+          test: /\.(woff|woff2)$/,
+          use: 'url-loader?limit=10000&mimetype=application/font-woff',
+        },
+        {
+          test: /\.ttf$/,
+          use: 'url-loader?limit=10000&mimetype=application/octet-stream',
+        },
+        {
+          test: /\.eot$/,
+          use: 'file-loader',
+        },
+        {
+          test: /\.svg$/,
+          use: 'url-loader?limit=10000&mimetype=image/svg+xml',
+        },
+        {
+          test: /^bootstrap\.js$/,
+          use: 'imports-loader?jQuery=jquery,$=jquery,Popper=popper.js,this=>window',
+        },
+      ],
     },
     resolve: {
-      symlinks: false
+      symlinks: false,
     },
     plugins: plugins,
-    devtool: isProd ? prodDevTool : devDevTool
+    devtool: isProd ? prodDevTool : devDevTool,
   }
 }

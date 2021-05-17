@@ -1,16 +1,16 @@
-import './setup'
-import { BootstrapModals } from 'nextbone-modals'
 import $ from 'jquery'
+import 'bootstrap'
 import { event } from 'nextbone'
 import './lorem-dialog'
+import { BootstrapModals } from '../../dist/nextbone-modals'
 
 const modals = new BootstrapModals()
 modals.setup({
-  container: '#main-modal-container'
+  container: '#main-modal-container',
 })
 
 function stringifyArgs(args) {
-  return args.map(item => {
+  return args.map((item) => {
     if (item instanceof HTMLElement) {
       return `Element(${item.tagName})`
     } else if (item instanceof $.Event) {
@@ -22,13 +22,16 @@ function stringifyArgs(args) {
 }
 
 class ModalsExample extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     modals.on('all', (name, ...args) => {
-      $(this).find('#events').append(`${name} ${stringifyArgs(args)} <br/>`)
+      $(this)
+        .find('#events')
+        .append(`${name} ${stringifyArgs(args)} <br/>`)
     })
   }
-  connectedCallback () {
+
+  connectedCallback() {
     this.innerHTML = `
     <div class="container">
       <h2>Modal Service Example</h2>
@@ -79,6 +82,15 @@ class ModalsExample extends HTMLElement {
                   </select>
                 </div>
               </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="size">Prompt input</label>
+                  <select class="form-control" name="input">
+                    <option value="" selected>Text input</option>
+                    <option value="radiogroup">Radio group</option>                    
+                  </select>
+                </div>
+              </div>              
             </div>
           </form>      
         </div>
@@ -102,53 +114,57 @@ class ModalsExample extends HTMLElement {
     const formEl = this.querySelector('form[name="options"]')
     const data = new FormData(formEl)
     const result = {}
-    for(let pair of data.entries()) {
+    for (let pair of data.entries()) {
       result[pair[0]] = pair[1]
     }
     return result
   }
 
   @event('click', '#alert')
-  showAlert (e) {
+  showAlert(e) {
     const options = this.getOptions()
     Object.assign(options, {
       title: 'Alert',
-      text: `You are in danger!`
+      text: `You are in danger!`,
     })
-    modals.alert(options).then(val => this.log('alert', val))
+    modals.alert(options).then((val) => this.log('alert', val))
   }
 
   @event('click', '#confirm')
-  showConfirm (e) {
+  showConfirm(e) {
     const options = this.getOptions()
     Object.assign(options, {
       title: 'Confirmation',
-      text: `Should i stay? Or should i go?`
+      text: `Should i stay? Or should i go?`,
     })
-    modals.confirm(options).then(val => this.log('confirm', val))
+    modals.confirm(options).then((val) => this.log('confirm', val))
   }
 
   @event('click', '#prompt')
-  showPrompt (e) {
+  showPrompt(e) {
     const options = this.getOptions()
     Object.assign(options, {
       title: 'Prompt',
       text: `What is your name?`,
-      value: 'Waldo'
+      value: 'Waldo',
+      items: [
+        { name: 'The Great Waldo', value: 'Waldo' },
+        { name: 'The Magnific Jones', value: 'Jones' },
+      ],
     })
-    modals.prompt(options).then(val => this.log('prompt', val))
+    modals.prompt(options).then((val) => this.log('prompt', val))
   }
 
   @event('click', '#dialog')
-  showDialog (e) {
+  showDialog(e) {
     const options = this.getOptions()
     const el = document.createElement('lorem-dialog')
-    modals.dialog(el, options).then(val => this.log('dialog', val))
-  }  
+    modals.dialog(el, options).then((val) => this.log('dialog', val))
+  }
 
-  log (type, msg) {
+  log(type, msg) {
     $(this).find('#log').append(`${type}: ${msg} <br/>`)
-  }  
+  }
 }
 
 customElements.define('modals-example', ModalsExample)

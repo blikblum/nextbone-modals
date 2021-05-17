@@ -1,30 +1,37 @@
 module.exports = {
-  'presets': [
+  presets: [
     [
       '@babel/preset-env',
       {
-        'targets': {
-          'browsers': [
-            'chrome 60'
-          ]
+        targets: {
+          browsers: ['chrome 60'],
         },
-        'modules': false
-      }
-    ]
+        modules: false,
+      },
+    ],
   ],
-  'env': {
-    'test': {
-      'presets': [
+  plugins: [
+    [
+      '@babel/plugin-proposal-decorators',
+      {
+        legacy: false,
+        decoratorsBeforeExport: false,
+      },
+    ],
+  ],
+  env: {
+    test: {
+      presets: [
         [
           '@babel/preset-env',
           {
-            'targets': {
-              'node': 'current'
+            targets: {
+              node: 'current',
             },
-            'modules': 'commonjs'
-          }
-        ]
-      ]
-    }
-  }
+            modules: 'commonjs',
+          },
+        ],
+      ],
+    },
+  },
 }

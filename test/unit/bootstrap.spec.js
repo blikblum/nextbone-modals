@@ -62,9 +62,10 @@ describe('Bootstrap', () => {
       modals.on('open', () => {
         const view = container.querySelector('bootstrap-modal-prompt')
         const inputs = view.querySelectorAll('.form-group input')
-        const labels = view.querySelectorAll('.form-group label')
+        const labels = view.querySelectorAll('.form-group label.form-check-label')
 
         expect(inputs.length).toBe(2)
+        expect(labels.length).toBe(2)
         expect(inputs[0]).toHaveAttribute('type', 'radio')
         expect(inputs[0]).toHaveAttribute('value', 's')
         expect(inputs[0]).not.toHaveAttribute('checked')

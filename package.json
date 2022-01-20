@@ -4,6 +4,9 @@
   "description": "Modal service for Nextbone",
   "main": "dist/nextbone-modals.js",
   "module": "dist/nextbone-modals.js",
+  "workspaces": [
+    "example"
+  ],
   "scripts": {
     "test": "jest",
     "build": "node tools/build",
@@ -48,7 +51,6 @@
     "jquery": "^3.4.1",
     "nextbone": "^0.20.0"
   },
-  "dependencies": {},
   "jest": {
     "modulePathIgnorePatterns": [
       "<rootDir>/dist/"
@@ -62,5 +64,6 @@
     "env": {
       "browser": true
     }
-  }
+  },
+  "packageManager": "yarn@3.1.1"
 }

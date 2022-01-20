@@ -1,6 +1,6 @@
 {
   "name": "nextbone-modals",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "Modal service for Nextbone",
   "main": "dist/nextbone-modals.js",
   "module": "dist/nextbone-modals.js",
@@ -27,6 +27,9 @@
   ],
   "author": "Luiz Américo Pereira Câmara",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "bugs": {
     "url": "https://github.com/blikblum/nextbone-modals/issues"
   },
@@ -48,8 +51,8 @@
     "rollup-plugin-babel": "^4.4.0"
   },
   "peerDependencies": {
-    "jquery": "^3.4.1",
-    "nextbone": "^0.20.0"
+    "jquery": "^3.6.0",
+    "nextbone": "^0.24.1"
   },
   "jest": {
     "modulePathIgnorePatterns": [
@@ -59,11 +62,6 @@
     "setupFilesAfterEnv": [
       "<rootDir>/test/unit/setup.js"
     ]
-  },
-  "standard": {
-    "env": {
-      "browser": true
-    }
   },
   "packageManager": "yarn@3.1.1"
 }

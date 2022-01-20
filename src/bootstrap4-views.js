@@ -41,7 +41,7 @@ class AlertView extends BaseModal {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      
+      <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>      
     </div>
 
     <div class="modal-body">
@@ -90,7 +90,7 @@ class PromptView extends BaseModal {
             (item, index) => `<div class="form-check">
         <input class="form-check-input" type="radio" name="prompt" id="radio-item-${index}" value="${
               item.value
-            }" ${value === item.value ? 'checked' : ''} />
+            }" ${value === item.value ? 'checked' : ''}>
         <label class="form-check-label" for="radio-item-${index}">
           ${item.name || ''}
         </label>
@@ -103,7 +103,7 @@ class PromptView extends BaseModal {
         <label for="modal__input--prompt">${text}</label>
         <input id="modal__input--prompt" class="form-control" type="${type}" value="${
           value || ''
-        }" />`
+        }">`
     }
   }
 
@@ -112,7 +112,7 @@ class PromptView extends BaseModal {
     <form>
       <div class="modal-header">
         <h5 class="modal-title">${data.title}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>      
       </div>
 
       <div class="modal-body">
@@ -122,7 +122,7 @@ class PromptView extends BaseModal {
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">${
           data.cancel || defaultCaptions.cancel
         }</button>
         <button type="submit" class="btn btn-primary">${data.ok || defaultCaptions.ok}</button>
@@ -137,7 +137,7 @@ class ConfirmView extends BaseModal {
     return `
     <div class="modal-header">
       <h5 class="modal-title">${data.title}</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>      
+      <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>      
     </div>
     
     <div class="modal-body">
@@ -145,7 +145,7 @@ class ConfirmView extends BaseModal {
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">${
         data.no || defaultCaptions.no
       }</button>
       <button type="button" class="btn btn-primary">${data.yes || defaultCaptions.yes}</button>

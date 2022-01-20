@@ -7,13 +7,6 @@ const DIST_DIR = 'dist'
 const devDevTool = 'source-map' // see https://webpack.js.org/configuration/devtool/ for options
 const prodDevTool = false
 
-var envPresetConfig = {
-  modules: false,
-  targets: {
-    browsers: ['chrome 60'],
-  },
-}
-
 var plugins = [
   new MiniCSSExtractPlugin({
     // Options similar to the same options in webpackOptions.output
@@ -40,27 +33,6 @@ module.exports = function (env) {
     },
     module: {
       rules: [
-        {
-          test: /\.js$/,
-          include: [path.resolve('src')],
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                presets: [['@babel/preset-env', envPresetConfig]],
-                plugins: [
-                  [
-                    '@babel/plugin-proposal-decorators',
-                    {
-                      legacy: false,
-                      decoratorsBeforeExport: false,
-                    },
-                  ],
-                ],
-              },
-            },
-          ],
-        },
         {
           test: /\.css$/,
           use: [MiniCSSExtractPlugin.loader, 'css-loader'],

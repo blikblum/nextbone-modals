@@ -5,7 +5,7 @@
   "main": "dist/nextbone-modals.js",
   "module": "dist/nextbone-modals.js",
   "workspaces": [
-    "example"
+    "examples/*"
   ],
   "scripts": {
     "test": "jest",
@@ -39,10 +39,10 @@
     "bootstrap": "4",
     "del": "^5.1.0",
     "jest": "^26.4.2",
-    "jquery": "^3.5.1",
-    "lodash-es": "^4.17.15",
-    "nextbone": "^0.20.0",
-    "popper.js": "1",
+    "jquery": "^3.6.0",
+    "lodash-es": "^4.17.21",
+    "nextbone": "^0.24.1",
+    "popper.js": "1.16.1",
     "prettier": "^2.2.1",
     "rollup": "^2.26.8",
     "rollup-plugin-babel": "^4.4.0"

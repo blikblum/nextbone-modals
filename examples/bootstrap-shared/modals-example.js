@@ -1,13 +1,6 @@
-import 'bootstrap'
-import { BootstrapModals } from 'nextbone-modals'
 import $ from 'jquery'
-import { event } from 'nextbone'
-import './lorem-dialog'
-
-const modals = new BootstrapModals()
-modals.setup({
-  container: '#main-modal-container',
-})
+import { delegate } from 'nextbone'
+import './lorem-dialog.js'
 
 function stringifyArgs(args) {
   return args.map((item) => {
@@ -24,12 +17,26 @@ function stringifyArgs(args) {
 class ModalsExample extends HTMLElement {
   constructor() {
     super()
-    modals.on('all', (name, ...args) => {
+
+    delegate(this, 'click', '#alert', this.showAlert, this)
+    delegate(this, 'click', '#confirm', this.showConfirm, this)
+    delegate(this, 'click', '#prompt', this.showPrompt, this)
+    delegate(this, 'click', '#dialog', this.showDialog, this)
+  }
+
+  set modals(v) {
+    this._modals = v
+    this._modals.on('all', (name, ...args) => {
       $(this)
         .find('#events')
         .append(`${name} ${stringifyArgs(args)} <br/>`)
     })
   }
+
+  get modals() {
+    return this._modals
+  }
+
   connectedCallback() {
     this.innerHTML = `
     <div class="container">
@@ -53,8 +60,8 @@ class ModalsExample extends HTMLElement {
         <div class="card-body">
           <h4 class="card-title">Options</h4>
           <form name="options">
-            <div class="row">
-              <div class="col-md-3">
+            <div class="row align-items-center">
+              <div class="col-auto">
                 <div class="form-check">
                   <label class="form-check-label">
                     <input type="checkbox" class="form-check-input" name="centered">
@@ -62,7 +69,7 @@ class ModalsExample extends HTMLElement {
                   </label>
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-auto">
                 <div class="form-check">
                   <label class="form-check-label">
                     <input type="checkbox" class="form-check-input" name="scrollable">
@@ -119,28 +126,25 @@ class ModalsExample extends HTMLElement {
     return result
   }
 
-  @event('click', '#alert')
-  showAlert(e) {
+  showAlert() {
     const options = this.getOptions()
     Object.assign(options, {
       title: 'Alert',
       text: `You are in danger!`,
     })
-    modals.alert(options).then((val) => this.log('alert', val))
+    this.modals.alert(options).then((val) => this.log('alert', val))
   }
 
-  @event('click', '#confirm')
-  showConfirm(e) {
+  showConfirm() {
     const options = this.getOptions()
     Object.assign(options, {
       title: 'Confirmation',
       text: `Should i stay? Or should i go?`,
     })
-    modals.confirm(options).then((val) => this.log('confirm', val))
+    this.modals.confirm(options).then((val) => this.log('confirm', val))
   }
 
-  @event('click', '#prompt')
-  showPrompt(e) {
+  showPrompt() {
     const options = this.getOptions()
     Object.assign(options, {
       title: 'Prompt',
@@ -151,14 +155,16 @@ class ModalsExample extends HTMLElement {
         { name: 'The Magnific Jones', value: 'Jones' },
       ],
     })
-    modals.prompt(options).then((val) => this.log('prompt', val))
+    this.modals.prompt(options).then((val) => this.log('prompt', val))
   }
 
-  @event('click', '#dialog')
-  showDialog(e) {
+  showDialog() {
     const options = this.getOptions()
     const el = document.createElement('lorem-dialog')
-    modals.dialog(el, options).then((val) => this.log('dialog', val))
+    if (this.hasAttribute('bs-4')) {
+      el.setAttribute('bs-4', '')
+    }
+    this.modals.dialog(el, options).then((val) => this.log('dialog', val))
   }
 
   log(type, msg) {

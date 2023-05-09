@@ -29,29 +29,22 @@ export class Modals extends Events {
    * @param {HTMLElement} [view]
    * @returns {Promise}
    */
-  open(view, options) {
+  async open(view, options) {
     let previousView
     view.options = options
-    return Promise.resolve()
-      .then(() => {
-        this.trigger('before:open', view, options)
-        this._isOpen = true
+    this.trigger('before:open', view, options)
+    this._isOpen = true
 
-        previousView = last(this.views)
-        this.views.push(view)
+    previousView = last(this.views)
+    this.views.push(view)
 
-        return this.render(view, options)
-      })
-      .then(() => {
-        if (previousView) {
-          return this.animateSwap(previousView, view, options)
-        } else {
-          return this.animateIn(view, options)
-        }
-      })
-      .then(() => {
-        this.trigger('open', view, options)
-      })
+    await this.render(view, options)
+    if (previousView) {
+      await this.animateSwap(previousView, view, options)
+    } else {
+      await this.animateIn(view, options)
+    }
+    this.trigger('open', view, options)
   }
 
   /**
@@ -59,51 +52,46 @@ export class Modals extends Events {
    * @param {HTMLElement} [view]
    * @returns {Promise}
    */
-  close(view, options) {
+  async close(view, options) {
     let previousView
     let views
 
-    return Promise.resolve()
-      .then(() => {
-        if (view) {
-          this.trigger('before:close', view, options)
-        } else {
-          this.views.map((view) => this.trigger('before:close', view, options))
-        }
+    if (view) {
+      this.trigger('before:close', view, options)
+    } else {
+      this.views.map((view) => this.trigger('before:close', view, options))
+    }
 
-        this._isOpen = false
+    this._isOpen = false
 
-        if (view) {
-          views = this.views = without(this.views, view)
-        } else {
-          views = this.views
-          this.views = []
-        }
+    if (view) {
+      views = this.views = without(this.views, view)
+    } else {
+      views = this.views
+      this.views = []
+    }
 
-        previousView = last(views)
+    previousView = last(views)
 
-        if (view && previousView) {
-          return this.animateSwap(view, previousView, options)
-        } else if (view) {
-          return this.animateOut(view, options)
-        } else if (previousView) {
-          return this.animateOut(previousView, options)
-        }
-      })
-      .then(() => {
-        if (view) {
-          return this.remove(view, options)
-        } else {
-          return Promise.all(views.map((view) => this.remove(view, options)))
-        }
-      })
-      .then(() => {
-        if (view) {
-          this.trigger('close', view, options)
-        } else {
-          views.map((view) => this.trigger('close', view, options))
-        }
-      })
+    if (view && previousView) {
+      await this.animateSwap(view, previousView, options)
+    } else if (view) {
+      await this.animateOut(view, options)
+    } else if (previousView) {
+      await this.animateOut(previousView, options)
+    }
+
+    if (view) {
+      await this.remove(view, options)
+    } else {
+      await Promise.all(views.map((view) => this.remove(view, options)))
+    }
+
+    if (view) {
+      this.trigger('close', view, options)
+    } else {
+      views.map((view) => this.trigger('close', view, options))
+    }
   }
 
   /**

@@ -1,17 +1,15 @@
 /* eslint-env jest */
-
+import { jest } from '@jest/globals'
 import { Modals } from '../../src/index'
 import { Events } from 'nextbone'
 
-function View () {
-
-}
+function View() {}
 
 describe('Modals', function () {
   var ModalService
   beforeEach(function () {
     ModalService = class extends Modals {
-      createElement (type) {
+      createElement(type) {
         const result = document.createElement(`modal-${type}`)
         Events.extend(result)
         return result
@@ -39,29 +37,25 @@ describe('Modals', function () {
 
       it('should trigger a "before:open" event', function () {
         return modalService.open(view, options).then(() => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('before:open', view, options)
+          expect(triggerSpy).toHaveBeenCalledWith('before:open', view, options)
         })
       })
 
       it('should render the view', function () {
         return modalService.open(view, options).then(() => {
-          expect(modalService.render)
-            .toHaveBeenCalledWith(view, options)
+          expect(modalService.render).toHaveBeenCalledWith(view, options)
         })
       })
 
       it('should animate the view in', function () {
         return modalService.open(view, options).then(() => {
-          expect(modalService.animateIn)
-            .toHaveBeenCalledWith(view, options)
+          expect(modalService.animateIn).toHaveBeenCalledWith(view, options)
         })
       })
 
       it('should trigger a "before:open" event', function () {
         modalService.render = () => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('before:open', view, options)
+          expect(triggerSpy).toHaveBeenCalledWith('before:open', view, options)
         }
 
         return modalService.open(view, options)
@@ -69,8 +63,7 @@ describe('Modals', function () {
 
       it('should trigger a "open" event', function () {
         return modalService.open(view, options).then(() => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('open', view, options)
+          expect(triggerSpy).toHaveBeenCalledWith('open', view, options)
         })
       })
     })
@@ -86,22 +79,19 @@ describe('Modals', function () {
 
       it('should render the view', function () {
         return modalService.open(view2, options).then(() => {
-          expect(modalService.render)
-            .toHaveBeenCalledWith(view2, options)
+          expect(modalService.render).toHaveBeenCalledWith(view2, options)
         })
       })
 
       it('should animate the swapping of the views', function () {
         return modalService.open(view2, options).then(() => {
-          expect(modalService.animateSwap)
-            .toHaveBeenCalledWith(view1, view2, options)
+          expect(modalService.animateSwap).toHaveBeenCalledWith(view1, view2, options)
         })
       })
 
       it('should trigger a "before:open" event', function () {
         modalService.render = () => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('before:open', view2, options)
+          expect(triggerSpy).toHaveBeenCalledWith('before:open', view2, options)
         }
 
         return modalService.open(view2, options)
@@ -109,8 +99,7 @@ describe('Modals', function () {
 
       it('should trigger a "open" event', function () {
         return modalService.open(view2, options).then(() => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('open', view2, options)
+          expect(triggerSpy).toHaveBeenCalledWith('open', view2, options)
         })
       })
     })
@@ -132,15 +121,13 @@ describe('Modals', function () {
 
       it('should animate the view out', function () {
         return modalService.close(view, options).then(() => {
-          expect(modalService.animateOut)
-            .toHaveBeenCalledWith(view, options)
+          expect(modalService.animateOut).toHaveBeenCalledWith(view, options)
         })
       })
 
       it('should remove the view', function () {
         return modalService.close(view, options).then(() => {
-          expect(modalService.remove)
-            .toHaveBeenCalledWith(view, options)
+          expect(modalService.remove).toHaveBeenCalledWith(view, options)
         })
       })
 
@@ -172,22 +159,19 @@ describe('Modals', function () {
 
       it('should animate the swapping of the views', function () {
         return modalService.close(view2, options).then(() => {
-          expect(modalService.animateSwap)
-            .toHaveBeenCalledWith(view2, view1, options)
+          expect(modalService.animateSwap).toHaveBeenCalledWith(view2, view1, options)
         })
       })
 
       it('should remove the view', function () {
         return modalService.close(view2, options).then(() => {
-          expect(modalService.remove)
-            .toHaveBeenCalledWith(view2, options)
+          expect(modalService.remove).toHaveBeenCalledWith(view2, options)
         })
       })
 
       it('should trigger a "before:close" event', function () {
         modalService.remove = () => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('before:close', view2, options)
+          expect(triggerSpy).toHaveBeenCalledWith('before:close', view2, options)
         }
 
         return modalService.close(view2, options)
@@ -195,8 +179,7 @@ describe('Modals', function () {
 
       it('should trigger a "close" event', function () {
         return modalService.close(view2, options).then(() => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('close', view2, options)
+          expect(triggerSpy).toHaveBeenCalledWith('close', view2, options)
         })
       })
     })
@@ -214,8 +197,7 @@ describe('Modals', function () {
 
       it('should animate the current view out', function () {
         return modalService.close(null, options).then(() => {
-          expect(modalService.animateOut)
-            .toHaveBeenCalledWith(view2, options)
+          expect(modalService.animateOut).toHaveBeenCalledWith(view2, options)
         })
       })
 
@@ -228,10 +210,8 @@ describe('Modals', function () {
 
       it('should trigger a "before:close" event', function () {
         modalService.remove = () => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('before:close', view1, options)
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('before:close', view2, options)
+          expect(triggerSpy).toHaveBeenCalledWith('before:close', view1, options)
+          expect(triggerSpy).toHaveBeenCalledWith('before:close', view2, options)
         }
 
         return modalService.close(null, options)
@@ -239,10 +219,8 @@ describe('Modals', function () {
 
       it('should trigger a "close" event', function () {
         return modalService.close(null, options).then(() => {
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('close', view1, options)
-          expect(triggerSpy)
-            .toHaveBeenCalledWith('close', view2, options)
+          expect(triggerSpy).toHaveBeenCalledWith('close', view1, options)
+          expect(triggerSpy).toHaveBeenCalledWith('close', view2, options)
         })
       })
     })
@@ -293,8 +271,7 @@ describe('Modals', function () {
 
     it('should trigger a "before:alert" event', function () {
       modalService.on('open', () => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('before:alert', alertView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('before:alert', alertView, options)
         alertView.trigger('confirm')
       })
 
@@ -305,8 +282,7 @@ describe('Modals', function () {
       modalService.on('open', () => alertView.trigger('confirm'))
 
       return modalService.alert(options).then(() => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('alert', null, alertView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('alert', null, alertView, options)
       })
     })
   })
@@ -341,7 +317,7 @@ describe('Modals', function () {
 
       Promise.resolve().then(() => confirmView.trigger('confirm'))
 
-      return confirm.then(result => {
+      return confirm.then((result) => {
         expect(result).toBe(true)
         expect(openSpy).toHaveBeenCalledWith(confirmView, options)
         expect(closeSpy).toHaveBeenCalledWith(confirmView, options)
@@ -354,7 +330,7 @@ describe('Modals', function () {
 
       Promise.resolve().then(() => confirmView.trigger('cancel'))
 
-      return confirm.then(result => {
+      return confirm.then((result) => {
         expect(result).toBe(false)
         expect(openSpy).toHaveBeenCalledWith(confirmView, options)
         expect(closeSpy).toHaveBeenCalledWith(confirmView, options)
@@ -363,8 +339,7 @@ describe('Modals', function () {
 
     it('should trigger a "before:confirm" event', function () {
       modalService.on('open', () => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('before:confirm', confirmView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('before:confirm', confirmView, options)
         confirmView.trigger('confirm')
       })
 
@@ -375,8 +350,7 @@ describe('Modals', function () {
       modalService.on('open', () => confirmView.trigger('confirm'))
 
       return modalService.confirm(options).then(() => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('confirm', true, confirmView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('confirm', true, confirmView, options)
       })
     })
   })
@@ -409,7 +383,7 @@ describe('Modals', function () {
       const options = {}
       modalService.on('open', () => promptView.trigger('submit', 'myString'))
 
-      return modalService.prompt(options).then(result => {
+      return modalService.prompt(options).then((result) => {
         expect(result).toBe('myString')
         expect(openSpy).toHaveBeenCalledWith(promptView, options)
         expect(closeSpy).toHaveBeenCalledWith(promptView, options)
@@ -420,7 +394,7 @@ describe('Modals', function () {
       const options = {}
       modalService.on('open', () => promptView.trigger('cancel', 'devilsAdvocateString'))
 
-      return modalService.prompt(options).then(result => {
+      return modalService.prompt(options).then((result) => {
         expect(result).toBeUndefined()
         expect(openSpy).toHaveBeenCalledWith(promptView, options)
         expect(closeSpy).toHaveBeenCalledWith(promptView, options)
@@ -429,8 +403,7 @@ describe('Modals', function () {
 
     it('should trigger a "before:prompt" event', function () {
       modalService.on('open', () => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('before:prompt', promptView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('before:prompt', promptView, options)
         promptView.trigger('submit', 'myString')
       })
 
@@ -441,8 +414,7 @@ describe('Modals', function () {
       modalService.on('open', () => promptView.trigger('submit', 'myString'))
 
       return modalService.prompt(options).then(() => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('prompt', 'myString', promptView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('prompt', 'myString', promptView, options)
       })
     })
   })
@@ -463,7 +435,9 @@ describe('Modals', function () {
     })
 
     it('should throws when a view instance is not passed as option', function () {
-      return expect(modalService.dialog()).rejects.toThrow('ModalService: no view option passed to dialog')
+      return expect(modalService.dialog()).rejects.toThrow(
+        'ModalService: no view option passed to dialog'
+      )
     })
 
     it('should open the dialog modal and resolve with arbitrary data on submit', function () {
@@ -471,7 +445,7 @@ describe('Modals', function () {
       const options = {}
       modalService.on('open', () => dialogView.trigger('submit', data))
 
-      return modalService.dialog(dialogView, options).then(result => {
+      return modalService.dialog(dialogView, options).then((result) => {
         expect(result).toBe(data)
         expect(openSpy).toHaveBeenCalledWith(dialogView, options)
         expect(closeSpy).toHaveBeenCalledWith(dialogView, options)
@@ -482,7 +456,7 @@ describe('Modals', function () {
       const options = {}
       modalService.on('open', () => dialogView.trigger('cancel', 'devilsAdvocateString'))
 
-      return modalService.dialog(dialogView, options).then(result => {
+      return modalService.dialog(dialogView, options).then((result) => {
         expect(result).toBeUndefined()
         expect(openSpy).toHaveBeenCalledWith(dialogView, options)
         expect(closeSpy).toHaveBeenCalledWith(dialogView, options)
@@ -491,8 +465,7 @@ describe('Modals', function () {
 
     it('should trigger a "before:dialog" event', function () {
       modalService.on('open', () => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('before:dialog', dialogView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('before:dialog', dialogView, options)
         dialogView.trigger('submit', 'myString')
       })
 
@@ -503,8 +476,7 @@ describe('Modals', function () {
       modalService.on('open', () => dialogView.trigger('submit', 'myString'))
 
       return modalService.dialog(dialogView, options).then(() => {
-        expect(triggerSpy)
-          .toHaveBeenCalledWith('dialog', 'myString', dialogView, options)
+        expect(triggerSpy).toHaveBeenCalledWith('dialog', 'myString', dialogView, options)
       })
     })
   })
@@ -526,11 +498,14 @@ describe('Modals', function () {
     })
 
     it('should return false after closed', function () {
-      return modalService.open({}).then(() => {
-        return modalService.close()
-      }).then(() => {
-        expect(modalService.isOpen()).toBe(false)
-      })
+      return modalService
+        .open({})
+        .then(() => {
+          return modalService.close()
+        })
+        .then(() => {
+          expect(modalService.isOpen()).toBe(false)
+        })
     })
   })
 })

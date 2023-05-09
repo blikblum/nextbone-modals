@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap'
 import { Bootstrap4Modals } from '../../../src/index.js'
 import '../../bootstrap-shared/modals-example.js'

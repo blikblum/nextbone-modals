@@ -1,7 +1,6 @@
 /* eslint-env jest */
 
 import { BootstrapModals } from '../../src/bootstrap'
-import { Events } from 'nextbone'
 
 describe('Bootstrap', () => {
   let modals

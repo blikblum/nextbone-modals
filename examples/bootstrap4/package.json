@@ -3,8 +3,7 @@
   "main": "main.js",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --mode=development",
-    "prod": "webpack --mode=production --env.production"
+    "dev": "vite"
   },
   "dependencies": {
     "bootstrap": "4.3.1",
@@ -13,16 +12,6 @@
     "popper.js": "^1.16.1"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^3.0.0",
-    "file-loader": "^4.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "imports-loader": "^0.8.0",
-    "mini-css-extract-plugin": "^0.7.0",
-    "style-loader": "^0.23.1",
-    "url-loader": "1.0.1",
-    "webpack": "^4.34.0",
-    "webpack-cli": "^3.3.4",
-    "webpack-dev-server": "^3.7.1"
+    "vite": "^4.3.5"
   }
 }

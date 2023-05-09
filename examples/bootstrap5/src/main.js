@@ -1,4 +1,5 @@
 import './jquerySetup.js'
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap'
 import { BootstrapModals } from '../../../src/index.js'
 import '../../bootstrap-shared/modals-example.js'

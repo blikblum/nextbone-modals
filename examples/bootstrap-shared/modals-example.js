@@ -63,7 +63,7 @@ class ModalsExample extends HTMLElement {
             <div class="row align-items-center">
               <div class="col-auto">
                 <div class="form-check">
-                  <label class="form-check-label">
+                  <label class="form-label">
                     <input type="checkbox" class="form-check-input" name="centered">
                     Centered
                   </label>
@@ -71,16 +71,24 @@ class ModalsExample extends HTMLElement {
               </div>
               <div class="col-auto">
                 <div class="form-check">
-                  <label class="form-check-label">
+                  <label class="form-label">
                     <input type="checkbox" class="form-check-input" name="scrollable">
                     Scrollable
                   </label>
                 </div>
               </div>
+              <div class="col-auto">
+                <div class="form-check">
+                  <label class="form-label">
+                    <input type="checkbox" class="form-check-input" name="fullscreen">
+                    Fullscreen
+                  </label>
+                </div>
+              </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="size">Size</label>
-                  <select class="form-control" name="size" id="size">
+                  <label class="form-label" for="size">Size</label>
+                  <select class="form-select" name="size" id="size">
                     <option value="sm">Small</option>
                     <option value="" selected>Default</option>
                     <option value="lg">Large</option>
@@ -90,7 +98,7 @@ class ModalsExample extends HTMLElement {
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="size">Prompt input</label>
+                  <label class="form-label" for="size">Prompt input</label>
                   <select class="form-control" name="input">
                     <option value="" selected>Text input</option>
                     <option value="radiogroup">Radio group</option>                    

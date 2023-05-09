@@ -78,7 +78,11 @@ export class BootstrapModals extends Modals {
     this.contentRegion = new Region($dialog[0])
 
     this.on('before:open', (view, options) => {
-      const { size, scrollable, centered, customClass } = Object.assign({}, defaultOptions, options)
+      const { size, scrollable, centered, fullscreen, customClass } = Object.assign(
+        {},
+        defaultOptions,
+        options
+      )
       let dialogClasses = ''
       if (size) {
         dialogClasses += ` modal-${size}`
@@ -88,6 +92,9 @@ export class BootstrapModals extends Modals {
       }
       if (centered) {
         dialogClasses += ` modal-dialog-centered`
+      }
+      if (fullscreen) {
+        dialogClasses += ` modal-fullscreen`
       }
       if (customClass) {
         dialogClasses += ` ${customClass}`

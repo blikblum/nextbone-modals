@@ -1,6 +1,6 @@
 {
   "name": "nextbone-modals",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Modal service for Nextbone",
   "type": "module",
   "main": "dist/nextbone-modals.js",

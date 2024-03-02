@@ -42,7 +42,10 @@ export class Bootstrap4Modals extends Modals {
 
   start() {
     if (!this.container) {
-      throw new Error('Bootstrap Modals: container option is not defined')
+      const container = document.createElement('div')
+      container.classList.add('modals-container')      
+      document.body.appendChild(container)      
+      this.container = container
     }
 
     const $container = $(this.container)

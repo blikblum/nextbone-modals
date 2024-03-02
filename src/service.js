@@ -8,14 +8,8 @@ const cancelHandlerMap = new WeakMap()
  * @class Modals
  */
 export class Modals extends Events {
-  /**
-   * @constructs Modals
-   */
-  constructor(channelName) {
-    super(channelName)
-    this.views = []
-  }
-
+  views = []
+  
   createElement(type) {
     return document.createElement(`nextbone-modal-${type}`)
   }

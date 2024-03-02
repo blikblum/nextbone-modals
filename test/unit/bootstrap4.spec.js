@@ -19,6 +19,17 @@ describe('Bootstrap 4', () => {
     container.remove()
   })
 
+  it('should create a container if not specified', () => {
+    modals = new Bootstrap4Modals()
+    modals.onError = (err) => {
+      throw err
+    }
+    modals.start()
+    expect(modals.container).toBeDefined()
+    expect(modals.container.tagName).toBe('DIV')
+    expect(modals.container.parentElement).toBe(document.body)  
+  })
+
   describe('#prompt', () => {
     it('should render a text input by default', async () => {
       modals.on('open', () => {

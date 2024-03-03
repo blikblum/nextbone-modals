@@ -232,6 +232,16 @@ export class Modals extends Events {
 
       cancelHandlerMap.set(view, cancel)
 
+      view.addEventListener(
+        'submit',
+        (e) => {
+          close(e.detail)
+        },
+        { once: true }
+      )
+
+      view.addEventListener('cancel', cancel, { once: true })
+
       view.on({
         submit: (data) => close(data),
         cancel,

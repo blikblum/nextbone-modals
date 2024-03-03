@@ -5,6 +5,10 @@ import { Events } from 'nextbone'
 
 function View() {}
 
+class MixedEvents extends EventTarget {}
+
+Events.extend(MixedEvents.prototype)
+
 describe('Modals', function () {
   var ModalService
   beforeEach(function () {
@@ -232,7 +236,7 @@ describe('Modals', function () {
     beforeEach(function () {
       modalService = new ModalService()
       createElementSpy = jest.spyOn(modalService, 'createElement').mockImplementation(() => {
-        alertView = new Events()
+        alertView = new MixedEvents()
         return alertView
       })
       openSpy = jest.spyOn(modalService, 'open')
@@ -294,7 +298,7 @@ describe('Modals', function () {
     beforeEach(function () {
       modalService = new ModalService()
       createElementSpy = jest.spyOn(modalService, 'createElement').mockImplementation(() => {
-        confirmView = new Events()
+        confirmView = new MixedEvents()
         return confirmView
       })
       openSpy = jest.spyOn(modalService, 'open')
@@ -362,7 +366,7 @@ describe('Modals', function () {
     beforeEach(function () {
       modalService = new ModalService()
       createElementSpy = jest.spyOn(modalService, 'createElement').mockImplementation(() => {
-        promptView = new Events()
+        promptView = new MixedEvents()
         return promptView
       })
       openSpy = jest.spyOn(modalService, 'open')
@@ -426,7 +430,7 @@ describe('Modals', function () {
     var dialogView, modalService, options
 
     beforeEach(function () {
-      dialogView = new Events()
+      dialogView = new MixedEvents()
       modalService = new Modals()
       openSpy = jest.spyOn(modalService, 'open')
       closeSpy = jest.spyOn(modalService, 'close')
@@ -440,7 +444,7 @@ describe('Modals', function () {
       )
     })
 
-    it('should open the dialog modal and resolve with arbitrary data on submit', function () {
+    it('should open the dialog modal and resolve with arbitrary data on "submit" event', function () {
       const data = { key: 'value' }
       const options = {}
       modalService.on('open', () => dialogView.trigger('submit', data))
@@ -452,9 +456,36 @@ describe('Modals', function () {
       })
     })
 
-    it('should open the dialog modal and close with undefined on cancel', function () {
+    it('should open the dialog modal and resolve with arbitrary data on native "submit" event', function () {
+      const data = { key: 'value' }
+      const options = {}
+      modalService.on('open', () =>
+        dialogView.dispatchEvent(new CustomEvent('submit', { detail: data }))
+      )
+
+      return modalService.dialog(dialogView, options).then((result) => {
+        expect(result).toBe(data)
+        expect(openSpy).toHaveBeenCalledWith(dialogView, options)
+        expect(closeSpy).toHaveBeenCalledWith(dialogView, options)
+      })
+    })
+
+    it('should open the dialog modal and close with undefined on "cancel" event', function () {
       const options = {}
       modalService.on('open', () => dialogView.trigger('cancel', 'devilsAdvocateString'))
+
+      return modalService.dialog(dialogView, options).then((result) => {
+        expect(result).toBeUndefined()
+        expect(openSpy).toHaveBeenCalledWith(dialogView, options)
+        expect(closeSpy).toHaveBeenCalledWith(dialogView, options)
+      })
+    })
+
+    it('should open the dialog modal and close with undefined on native "cancel" event', function () {
+      const options = {}
+      modalService.on('open', () =>
+        dialogView.dispatchEvent(new CustomEvent('cancel', { detail: 'devilsAdvocateString' }))
+      )
 
       return modalService.dialog(dialogView, options).then((result) => {
         expect(result).toBeUndefined()

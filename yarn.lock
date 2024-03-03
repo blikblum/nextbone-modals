@@ -1779,7 +1779,7 @@ __metadata:
   dependencies:
     bootstrap: 4.3.1
     jquery: ^3.6.0
-    nextbone: ^0.24.1
+    nextbone: ^0.27.3
     popper.js: ^1.16.1
     vite: ^4.3.5
   languageName: unknown
@@ -1792,7 +1792,7 @@ __metadata:
     "@popperjs/core": ^2.11.0
     bootstrap: ^5.2.3
     jquery: ^3.6.0
-    nextbone: ^0.24.1
+    nextbone: ^0.27.3
     popper.js: ^1.16.1
     vite: ^4.3.5
   languageName: unknown
@@ -4365,7 +4365,7 @@ __metadata:
     jest-environment-jsdom: ^29.5.0
     jquery: ^3.6.0
     lodash-es: ^4.17.21
-    nextbone: ^0.24.1
+    nextbone: ^0.27.3
     popper.js: 1.16.1
     prettier: ^2.2.1
     rollup: ^2.26.8
@@ -4375,12 +4375,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"nextbone@npm:^0.24.1":
-  version: 0.24.1
-  resolution: "nextbone@npm:0.24.1"
+"nextbone@npm:^0.27.3":
+  version: 0.27.3
+  resolution: "nextbone@npm:0.27.3"
   dependencies:
     lodash-es: ^4.17.21
-  checksum: 6b39dc6aa6ecf74513cb040b4d0f45eca1d48203bc03da33b05440731d5548f0cf83ea03fe04b11ff0fb5a448494667e256e6312a04369bf40a3d31b9d0ad228
+  checksum: e289d84c594fafa8aca0985792285ca6741ed07f17af15595243912d15898e2b63cab0b4bc09798c672ce48d3e03bb829fb23fd31f261425f5bab8ffdedaa278
   languageName: node
   linkType: hard
 

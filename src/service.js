@@ -5,11 +5,40 @@ import { last, without } from 'lodash-es'
 const cancelHandlerMap = new WeakMap()
 
 /**
+ * @typedef AlertOptions
+ * @property {string} [title]
+ * @property {string} [text]
+ * @property {string} [ok]
+ *
+ * @typedef ConfirmOptions
+ * @property {string} [title]
+ * @property {string} [text]
+ * @property {string} [ok]
+ * @property {string} [cancel]
+ *
+ * @typedef PromptOptions
+ * @property {string} [title]
+ * @property {*} [value]
+ * @property {string} [type]
+ * @property {string} [input]
+ * @property {{name: string, value: any}[]} [items]
+ * @property {string} [ok]
+ * @property {string} [cancel]
+ *
+ * @typedef DialogOptions
+ * @property {boolean} [centered]
+ * @property {boolean} [scrollable]
+ * @property {boolean} [fullscreen]
+ * @property {string} [size]
+ * @property {string} [customClass]
+ */
+
+/**
  * @class Modals
  */
 export class Modals extends Events {
   views = []
-  
+
   createElement(type) {
     return document.createElement(`nextbone-modal-${type}`)
   }
@@ -145,7 +174,8 @@ export class Modals extends Events {
 
   /**
    * @method prompt
-   * @returns {Promise}
+   * @param {PromptOptions} [options]
+   * @returns {Promise<*>}
    */
   prompt(options = {}) {
     return new Promise((resolve, reject) => {

@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import { delegate } from 'nextbone'
 import './lorem-dialog.js'
+import { showAlert, showConfirm, showDialog, showPrompt } from '../../src/default.js'
 
 function stringifyArgs(args) {
   return args.map((item) => {
@@ -22,6 +23,7 @@ class ModalsExample extends HTMLElement {
     delegate(this, 'click', '#confirm', this.showConfirm, this)
     delegate(this, 'click', '#prompt', this.showPrompt, this)
     delegate(this, 'click', '#dialog', this.showDialog, this)
+    delegate(this, 'change', 'input[name="useDefaultService"]', this.inputHandler, this)
   }
 
   set modals(v) {
@@ -37,22 +39,32 @@ class ModalsExample extends HTMLElement {
     return this._modals
   }
 
+  useDefaultService = false
+
   connectedCallback() {
     this.innerHTML = `
     <div class="container">
       <h2>Modal Service Example</h2>
       <div class="row mt-3">
-        <div class="col-md-3">
+        <div class="col-auto">
           <button id="alert" class="btn btn-primary">Alert</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-auto">
           <button id="confirm" class="btn btn-primary">Confirm</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-auto">
           <button id="prompt" class="btn btn-primary">Prompt</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-auto">
           <button id="dialog" class="btn btn-primary">Dialog</button>
+        </div>
+        <div class="col-auto">
+          <div class="form-check">
+            <label class="form-label">
+              <input type="checkbox" class="form-check-input" name="useDefaultService">
+              Use default service
+            </label>
+          </div>          
         </div>
       </div>
 
@@ -124,6 +136,11 @@ class ModalsExample extends HTMLElement {
   `
   }
 
+  inputHandler(e) {
+    e.preventDefault()
+    this.useDefaultService = e.target.checked
+  }
+
   getOptions() {
     const formEl = this.querySelector('form[name="options"]')
     const data = new FormData(formEl)
@@ -140,7 +157,11 @@ class ModalsExample extends HTMLElement {
       title: 'Alert',
       text: `You are in danger!`,
     })
-    this.modals.alert(options).then((val) => this.log('alert', val))
+    if (this.useDefaultService) {
+      showAlert(options).then((val) => this.log('alert', val))
+    } else {
+      this.modals.alert(options).then((val) => this.log('alert', val))
+    }
   }
 
   showConfirm() {
@@ -149,7 +170,12 @@ class ModalsExample extends HTMLElement {
       title: 'Confirmation',
       text: `Should i stay? Or should i go?`,
     })
-    this.modals.confirm(options).then((val) => this.log('confirm', val))
+
+    if (this.useDefaultService) {
+      showConfirm(options).then((val) => this.log('confirm', val))
+    } else {
+      this.modals.confirm(options).then((val) => this.log('confirm', val))
+    }
   }
 
   showPrompt() {
@@ -163,7 +189,12 @@ class ModalsExample extends HTMLElement {
         { name: 'The Magnific Jones', value: 'Jones' },
       ],
     })
-    this.modals.prompt(options).then((val) => this.log('prompt', val))
+
+    if (this.useDefaultService) {
+      showPrompt(options).then((val) => this.log('prompt', val))
+    } else {
+      this.modals.prompt(options).then((val) => this.log('prompt', val))
+    }
   }
 
   showDialog() {
@@ -172,7 +203,12 @@ class ModalsExample extends HTMLElement {
     if (this.hasAttribute('bs-4')) {
       el.setAttribute('bs-4', '')
     }
-    this.modals.dialog(el, options).then((val) => this.log('dialog', val))
+
+    if (this.useDefaultService) {
+      showDialog(el, options).then((val) => this.log('dialog', val))
+    } else {
+      this.modals.dialog(el, options).then((val) => this.log('dialog', val))
+    }
   }
 
   log(type, msg) {

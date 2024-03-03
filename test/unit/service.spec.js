@@ -434,9 +434,9 @@ describe('Modals', function () {
       options = {}
     })
 
-    it('should throws when a view instance is not passed as option', function () {
+    it('should throws when a el is not passed as option', function () {
       return expect(modalService.dialog()).rejects.toThrow(
-        'ModalService: no view option passed to dialog'
+        'ModalService: no el option passed to dialog'
       )
     })
 
@@ -478,6 +478,17 @@ describe('Modals', function () {
       return modalService.dialog(dialogView, options).then(() => {
         expect(triggerSpy).toHaveBeenCalledWith('dialog', 'myString', dialogView, options)
       })
+    })
+
+    it('should set dialog properties defined in optons', function () {
+      const properties = { title: 'My Title', message: 'My Message' }
+      modalService.on('open', () => {
+        dialogView.trigger('submit', 'myString')
+        expect(dialogView.title).toBe('My Title')
+        expect(dialogView.message).toBe('My Message')
+      })
+
+      return modalService.dialog(dialogView, { ...options, properties })
     })
   })
 

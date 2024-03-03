@@ -45,10 +45,10 @@ export function showPrompt(options) {
 }
 
 /**
- * @param {string | HTMLElement} view
+ * @param {string | HTMLElement} el
  * @param {import("./service.js").DialogOptions} options
  * @returns {Promise<*>}
  */
-export function showDialog(view, options) {
-  return getModalsService().dialog(view, options)
+export function showDialog(el, options) {
+  return getModalsService().dialog(el, options)
 }

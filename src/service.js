@@ -31,6 +31,7 @@ const cancelHandlerMap = new WeakMap()
  * @property {boolean} [fullscreen]
  * @property {string} [size]
  * @property {string} [customClass]
+ * @property {Record<string, any>} [properties]
  */
 
 /**
@@ -119,8 +120,8 @@ export class Modals extends Events {
 
   /**
    * @method alert
-   * @param {Object} [options]
-   * @returns {Promise}
+   * @param {AlertOptions} [options]
+   * @returns {Promise<void>}
    */
   alert(options = {}) {
     return new Promise((resolve, reject) => {
@@ -144,8 +145,8 @@ export class Modals extends Events {
 
   /**
    * @method confirm
-   * @param {Object} [options]
-   * @returns {Promise}
+   * @param {ConfirmOptions} [options]
+   * @returns {Promise<boolean>}
    */
   confirm(options = {}) {
     return new Promise((resolve, reject) => {
@@ -202,11 +203,20 @@ export class Modals extends Events {
     })
   }
 
-  dialog(view, options = {}) {
-    if (!view) {
-      throw new Error('ModalService: no view option passed to dialog')
+  /**
+   * @param {string | HTMLElement} el
+   * @param {DialogOptions} options
+   * @returns {Promise<*>}
+   */
+  dialog(el, options = {}) {
+    if (!el) {
+      throw new Error('ModalService: no el option passed to dialog')
     }
     return new Promise((resolve, reject) => {
+      const view = typeof el === 'string' ? document.createElement(el) : el
+      if (options.properties) {
+        Object.assign(view, options.properties)
+      }
       let promise = this.open(view, options)
 
       this.trigger('before:dialog', view, options)

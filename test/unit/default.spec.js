@@ -1,16 +1,16 @@
 /* eslint-env jest */
 
-import { after } from 'lodash-es'
-import { BootstrapModals } from '../../dist/nextbone-modals.js'
 import {
+  BootstrapModals,
   getModalsService,
-  releaseDefaultModals,
   setDefaultModals,
   showAlert,
   showConfirm,
   showDialog,
   showPrompt,
-} from '../../src/default.js'
+} from '../../src/index.js'
+
+import { releaseDefaultModals } from '../../src/default.js'
 
 describe('default service', () => {
   it('should throw if not defined', () => {

@@ -3,17 +3,17 @@
   "version": "0.16.0",
   "description": "Modal service for Nextbone",
   "type": "module",
-  "main": "dist/nextbone-modals.js",
-  "module": "dist/nextbone-modals.js",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "types": "types/index.d.ts",
   "workspaces": [
     "examples/*"
   ],
   "scripts": {
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
-    "build": "node tools/build.cjs",
     "coverage": "jest --coverage",
     "format": "prettier src/**/*.js --write",
-    "prepublishOnly": "npm run build"
+    "types": "tsc --project tsconfig.types.json"
   },
   "repository": {
     "type": "git",
@@ -29,17 +29,16 @@
   "author": "Luiz Américo Pereira Câmara",
   "license": "MIT",
   "files": [
-    "dist"
+    "src",
+    "types"
   ],
   "bugs": {
     "url": "https://github.com/blikblum/nextbone-modals/issues"
   },
   "homepage": "https://github.com/blikblum/nextbone-modals",
   "devDependencies": {
-    "@babel/core": "^7.11.4",
     "@testing-library/jest-dom": "^5.16.5",
     "bootstrap": "5.2.3",
-    "del": "^5.1.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "jquery": "^3.6.0",
@@ -47,7 +46,7 @@
     "nextbone": "^0.27.3",
     "popper.js": "1.16.1",
     "prettier": "^2.2.1",
-    "rollup": "^2.26.8"
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "jquery": "^3.6.0",

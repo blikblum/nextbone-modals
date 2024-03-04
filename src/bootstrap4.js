@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { last } from 'lodash-es'
 import { Region } from 'nextbone/dom-utils'
-import { Modals } from './service'
+import { Modals } from './service.js'
 import { AlertView, PromptView, ConfirmView, defaultCaptions } from './bootstrap4-views.js'
 
 const layoutTemplate = `

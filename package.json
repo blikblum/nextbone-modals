@@ -1,6 +1,6 @@
 {
   "name": "nextbone-modals",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Modal service for Nextbone",
   "type": "module",
   "main": "src/index.js",

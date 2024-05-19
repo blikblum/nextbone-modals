@@ -1,4 +1,4 @@
-import { view, delegate } from 'nextbone'
+import { delegate } from 'nextbone'
 
 const content = `
 Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
@@ -38,14 +38,14 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagi
 Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
 `
 
-class LoremDialog extends view(HTMLElement) {
+class LoremDialog extends HTMLElement {
   constructor() {
     super()
     delegate(this, 'click', 'button.btn-primary', this.submit, this)
   }
 
   submit() {
-    this.trigger('submit', true)
+    this.dispatchEvent(new CustomEvent('submit', { bubbles: true, detail: true }))
   }
 
   connectedCallback() {

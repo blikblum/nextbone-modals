@@ -242,10 +242,12 @@ export class Modals extends Events {
 
       view.addEventListener('cancel', cancel, { once: true })
 
-      view.on({
-        submit: (data) => close(data),
-        cancel,
-      })
+      if (typeof view.on === 'function') {
+        view.on({
+          submit: (data) => close(data),
+          cancel,
+        })
+      }
     })
   }
 
